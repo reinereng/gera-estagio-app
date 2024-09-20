@@ -19,7 +19,7 @@ img = Image.open(BytesIO(response.content))
 # Caminho das DOCUMENTAÇÕES E IMAGENS
 
 # Função para preencher o documento de termo de compromisso
-def preencher_termo(nome_aluno, caminho_modelo): 
+def preencher_termo(nome_aluno, documento):
     dados_alunos = str(nome_aluno) + ", RG: " + str(rg_aluno) + ", CPF: " + str(cpf_aluno)
     dados_alunos = dados_alunos + ", estudante com matrícula " + str(matricula) + ", residente " + endereco_aluno
     
@@ -31,8 +31,8 @@ def preencher_termo(nome_aluno, caminho_modelo):
     
     supervisor_texto = supervisor + ", " + cargosupervisor + ", com registro no conselho profissional sob o número "  + str(conselho_empresa)
 
-    # Abre o modelo do documento
-    doc = Document(caminho_modelo)
+    # Usar o documento já carregado
+    doc = documento
     
     # Substitui as informações do aluno
     for paragrafo in doc.paragraphs:
