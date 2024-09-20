@@ -106,15 +106,15 @@ st.write(f"Você selecionou: {ies_escolhida}")
 
 if ies_escolhida == "Centro Universitário Unirb":
     #DOCUMENTOS
-    # URL do documento no GitHub
-    doc_url = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Termo_Compromisso_Centro.docx"
-    response = requests.get(doc_url)
-    caminho_termo = Document(BytesIO(response.content))
-    
-    # URL do documento no GitHub
-    doc_url = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Termo_Convenio_Centro.docx"
-    response = requests.get(doc_url)
-    caminho_conv = Document(BytesIO(response.content))
+    # URL do documento no GitHub para o termo de compromisso
+    doc_url_termo = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Termo_Compromisso_Centro.docx"
+    response_termo = requests.get(doc_url_termo)
+    caminho_termo = Document(BytesIO(response_termo.content))
+
+    # URL do documento no GitHub para o termo de convênio
+    doc_url_conv = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Termo_Convenio_Centro.docx"
+    response_conv = requests.get(doc_url_conv)
+    caminho_conv = Document(BytesIO(response_conv.content))
 
 elif ies_escolhida == "Centro Universitário Unirb Alagoinhas":
     #DOCUMENTOS
