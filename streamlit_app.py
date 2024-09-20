@@ -104,28 +104,27 @@ ies_escolhida = st.selectbox("Escolha a IES", opcoes_ies)
 # Exibe a opção escolhida
 st.write(f"Você selecionou: {ies_escolhida}")
 
+#DOCUMENTOS
 if ies_escolhida == "Centro Universitário Unirb":
-    #DOCUMENTOS
-    # URL do documento no GitHub para o termo de compromisso
+    # URL do documento no GitHub para o termo de compromisso e convênio
     doc_url_termo = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Termo_Compromisso_Centro.docx"
-    response_termo = requests.get(doc_url_termo)
-    caminho_termo = Document(BytesIO(response_termo.content))
-
-    # URL do documento no GitHub para o termo de convênio
     doc_url_conv = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Termo_Convenio_Centro.docx"
-    response_conv = requests.get(doc_url_conv)
-    caminho_conv = Document(BytesIO(response_conv.content))
 
 elif ies_escolhida == "Centro Universitário Unirb Alagoinhas":
-    #DOCUMENTOS
-    caminho_termo = "C:/Users/Reiner/Painel de Documentos/Modelo_Termo_Compromisso_Centro_Alagoinhas.docx"
-    caminho_conv = "C:/Users/Reiner/Painel de Documentos/Modelo_Termo_Convenio_Centro_Alagoinhas.docx"
+    # URL do documento no GitHub para o termo de compromisso e convênio
+    doc_url_termo = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Termo_Compromisso_Centro_Alagoinhas.docx"
+    doc_url_conv = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Termo_Convenio_Centro_Alagoinhas.docx"
 
 elif ies_escolhida == "Faculdade Diplomata":
-    #DOCUMENTOS
-    caminho_termo = "C:/Users/Reiner/Painel de Documentos/Modelo_Termo_Compromisso_Diplomata.docx"
-    caminho_conv = "C:/Users/Reiner/Painel de Documentos/Modelo_Termo_Convenio_Diplomata.docx"
+    # URL do documento no GitHub para o termo de compromisso e convênio
+    doc_url_termo = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Termo_Compromisso_Diplomata.docx"
+    doc_url_conv = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Termo_Convenio_Diplomata.docx"
 
+response_termo = requests.get(doc_url_termo)
+caminho_termo = Document(BytesIO(response_termo.content))
+
+response_conv = requests.get(doc_url_conv)
+caminho_conv = Document(BytesIO(response_conv.content))
 
 dados_ies = "AMERICA EDUCACIONAL S.A - CENTRO UNIVERSITÁRIO UNIRB - SALVADOR, situado à Av. Tamburugy, 474 - Patamares, Salvador - BA, CEP: 41680-440, tel: (71) 3368-8300 e-mail: unirb@unirb.edu.br inscrita no CNPJ 28.844.791/0001-91 representada neste ato, por Carlos Joel Pereira, CPF: 159.659.615-53"
 
