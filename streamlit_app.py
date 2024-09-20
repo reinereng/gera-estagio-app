@@ -6,10 +6,6 @@ import numpy as np
 import pandas as pd
 
 # Caminho das DOCUMENTAÇÕES E IMAGENS
-# IMAGENS
-# Caminho para a logo da Rede UNIRB
-caminho_logo = "C:/Users/Reiner/Painel de Documentos/logo_rede_unirb.jpg"
-
 
 # Função para preencher o documento de termo de compromisso
 def preencher_termo(nome_aluno, caminho_modelo): 
@@ -79,7 +75,7 @@ def preencher_termo(nome_aluno, caminho_modelo):
 # ----------------------- STREAMLIT ------------------------------------------
 # ----------------------------------------------------------------------------
 # Exibe a logo no topo da aplicação
-st.image(caminho_logo, width=400)  # Ajuste o valor de width conforme necessário
+st.image("logo_rede_unirb.jpg", width=300)  # Ajuste o valor de width conforme necessário
 
 # Interface do Streamlit
 st.title('Gerador de documentação para Estágio Supervisionado')
