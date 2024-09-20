@@ -109,12 +109,12 @@ if ies_escolhida == "Centro Universitário Unirb":
     # URL do documento no GitHub
     doc_url = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Termo_Compromisso_Centro.docx"
     response = requests.get(doc_url)
-    caminho_termo = docx.Document(BytesIO(response.content))
+    caminho_termo = Document(BytesIO(response.content))
     
     # URL do documento no GitHub
     doc_url = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Termo_Convenio_Centro.docx"
     response = requests.get(doc_url)
-    caminho_conv = docx.Document(BytesIO(response.content))
+    caminho_conv = Document(BytesIO(response.content))
 
 elif ies_escolhida == "Centro Universitário Unirb Alagoinhas":
     #DOCUMENTOS
