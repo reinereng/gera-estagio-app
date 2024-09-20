@@ -352,12 +352,31 @@ else:
     if st.button("Gerar Documento"):
         
         if nome_aluno:
-            # Preenche o termo de compromisso
-            nome_arquivo = preencher_termo(nome_aluno, caminho_termo)
+            # Inicializa o estado da sessão para armazenar os arquivos gerados
+            nome_arquivo_termo = preencher_termo(nome_aluno, caminho_termo)
             
-            # Exibe o link para download do documento
-            with open(nome_arquivo, "rb") as file:
-                st.download_button(label=f"Download Termo de Compromisso - {nome_aluno}", data=file, file_name=f"Termo_Compromisso_{nome_aluno.replace(' ', '_')}.docx")
+            # Preenche o termo de convênio
+            nome_arquivo_convenio = preencher_termo(nome_aluno, caminho_conv)
+            
+            # Armazena os caminhos dos arquivos no estado da sessão
+            st.session_state.arquivos_gerados[nome_aluno]['termo'] = nome_arquivo_termo
+            st.session_state.arquivos_gerados[nome_aluno]['convenio'] = nome_arquivo_convenio
+
+            # Verifica se os arquivos foram gerados e exibe os botões de download
+            if st.session_state.arquivos_gerados[nome_aluno]['termo'] and st.session_state.arquivos_gerados[nome_aluno]['convenio']:
+                with open(st.session_state.arquivos_gerados[nome_aluno]['termo'], "rb") as file_termo:
+                    st.download_button(
+                        label=f"Download Termo de Compromisso - {nome_aluno}", 
+                        data=file_termo, 
+                        file_name=f"Termo_Compromisso_{nome_aluno.replace(' ', '_')}.docx"
+                    )
+                
+                with open(st.session_state.arquivos_gerados[nome_aluno]['convenio'], "rb") as file_convenio:
+                    st.download_button(
+                        label=f"Download Termo de Convênio - {nome_aluno}", 
+                        data=file_convenio, 
+                        file_name=f"Termo_Convenio_{nome_aluno.replace(' ', '_')}.docx"
+                    )        
         else:
             st.warning("Por favor, insira o nome do aluno.")
 
