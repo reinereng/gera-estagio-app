@@ -161,13 +161,25 @@ opcao_entrada = st.radio(
 if opcao_entrada == "Planilha":
     # Upload de planilha
     arquivo_planilha = st.file_uploader("Carregue a planilha de entrada", type=["xlsx"])
-    
-    if arquivo_planilha is not None:
-        # # Leitura dos dados da planilha
-        # df = pd.read_excel(arquivo_planilha)
-        # st.write("Dados carregados da planilha:", df)
-        # # Use 'dados_planilha' para preencher automaticamente os campos necessários
 
+    # URL do arquivo de exemplo no GitHub
+    planilha_url = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Dados_Estagio_Exemplo.xlsx"
+
+    # Faz o download direto do arquivo da URL
+    response = requests.get(planilha_url)
+
+    # Botão de download para a planilha de exemplo
+    st.subheader("Baixar planilha de exemplo")
+    st.write("Clique no botão abaixo para baixar a planilha de exemplo para preenchimento:")
+
+    st.download_button(
+        label="Baixar Planilha de Exemplo",
+        data=response.content,  # Conteúdo direto da resposta
+        file_name="Dados_Estagio_Exemplo.xlsx",
+        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    )
+
+    if arquivo_planilha is not None:
         # Limpa o DataFrame antigo no estado da sessão
         st.session_state.df = pd.read_excel(arquivo_planilha)
         st.write("Dados carregados da planilha:", st.session_state.df)
