@@ -141,7 +141,7 @@ opcoes_Professor = [
 # Exibe a lista suspensa para escolha da IES
 professor_escolhido = st.selectbox("Escolha a IES", opcoes_Professor)
 
-if professor_escolhido == "Reiner Requião de Souza":
+if professor_escolhido == "Reiner Requião":
     professor = "Reiner Requião de Souza, portador do CPF n.º 009.893.855-07 e RG nº 07584711-65 SSP/BA"
 if professor_escolhido == "Rejane da Costa":
     professor = "Rejane da Costa, portador do CPF n.º 006.411.315-93"
