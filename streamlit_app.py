@@ -130,9 +130,13 @@ dados_ies = "AMERICA EDUCACIONAL S.A - CENTRO UNIVERSITÁRIO UNIRB - SALVADOR, s
 
 # Lista de opções de IES
 opcoes_Professor = [
-    "Reiner Requião de Souza",
+    "Reiner Requião",
+    "Anderson Ravanny",
     "Francianne Oliveira",
-    "Rejane da Costa"]
+    "Luciene Vasconcelos",
+    "Patrícia Medeiros",
+    "Rejane da Costa",
+    ]
 
 # Exibe a lista suspensa para escolha da IES
 professor_escolhido = st.selectbox("Escolha a IES", opcoes_Professor)
@@ -142,8 +146,13 @@ if professor_escolhido == "Reiner Requião de Souza":
 if professor_escolhido == "Rejane da Costa":
     professor = "Rejane da Costa, portador do CPF n.º 006.411.315-93"
 if professor_escolhido == "Francianne Oliveira":
-    professor = "Francianne Oliveira, portador do CPF n.º NÃO TEM, RG nº "
-
+    professor = "Francianne Oliveira Santos, portador do CPF n.º 016.969.575-16"
+if professor_escolhido == "Anderson Ravanny":
+    professor = "Anderson Ravanny de Andrade Gomes, portador do CPF n.º 074.662.624-06"
+if professor_escolhido == "Luciene Vasconcelos":
+    professor = "Luciene Vasconcelos Pinto de Souza Silva, portador do CPF n.º 007.899.323-77"
+if professor_escolhido == "Patrícia Medeiros":
+    professor = "Patrícia Mara Medeiros, portador do CPF n.º 165.469.298-05"
 
 # Inicializa o estado da sessão para armazenar os arquivos gerados e o DataFrame
 if 'arquivos_gerados' not in st.session_state:
