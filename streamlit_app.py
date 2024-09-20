@@ -351,7 +351,11 @@ else:
     # Botão para gerar o documento
     if st.button("Gerar Documento"):
         
-        if nome_aluno:
+        # Inicializa o estado da sessão para armazenar os arquivos gerados
+        if nome_aluno not in st.session_state.arquivos_gerados:
+            st.session_state.arquivos_gerados[nome_aluno] = {'termo': None, 'convenio': None}
+
+        if nome_aluno:        
             # Inicializa o estado da sessão para armazenar os arquivos gerados
             nome_arquivo_termo = preencher_termo(nome_aluno, caminho_termo)
             
