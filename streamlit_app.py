@@ -106,8 +106,15 @@ st.write(f"Você selecionou: {ies_escolhida}")
 
 if ies_escolhida == "Centro Universitário Unirb":
     #DOCUMENTOS
-    caminho_termo = "C:/Users/Reiner/Painel de Documentos/Modelo_Termo_Compromisso_Centro.docx"
-    caminho_conv = "C:/Users/Reiner/Painel de Documentos/Modelo_Termo_Convenio_Centro.docx"
+    # URL do documento no GitHub
+    doc_url = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Termo_Compromisso_Centro.docx"
+    response = requests.get(doc_url)
+    caminho_termo = docx.Document(BytesIO(response.content))
+    
+    # URL do documento no GitHub
+    doc_url = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Termo_Convenio_Centro.docx"
+    response = requests.get(doc_url)
+    caminho_conv = docx.Document(BytesIO(response.content))
 
 elif ies_escolhida == "Centro Universitário Unirb Alagoinhas":
     #DOCUMENTOS

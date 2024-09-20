@@ -2,3 +2,5 @@ streamlit
 python-docx
 pandas
 numpy
+requests
+openpyxl
