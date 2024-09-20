@@ -24,7 +24,7 @@ def preencher_termo(nome_aluno, documento):
     dados_alunos = dados_alunos + ", estudante com matrícula " + str(matricula) + ", residente " + endereco_aluno
     
     dados_empresa = nome_empresa + " com sede e foro na Cidade de " + cidade_empresa + ", " + uf_empresa + ", estabelecida no endereço: "
-    dados_empresa = dados_empresa +  endereco_empresa + ", " + bairro_empresa + ", CEP: " + cep_empresa + ", cadastrada no CNPJ: " 
+    dados_empresa = dados_empresa +  endereco_empresa + ", " + str(bairro_empresa) + ", CEP: " + str(cep_empresa) + ", cadastrada no CNPJ: " 
     dados_empresa = dados_empresa + cnpj_empresa + ", neste ato representada por " + representante + ", CPF: " + cpf_empresa
  
     horasestagio = str(total_horas_estagio) + " horas, com jornada de estágio de " + str(horas_por_dia) + " horas por dia e carga horária máxima de 30 horas/semanais"
