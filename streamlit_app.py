@@ -168,9 +168,6 @@ opcao_entrada = st.radio(
 )
 
 if opcao_entrada == "Planilha":
-    # Upload de planilha
-    arquivo_planilha = st.file_uploader("Carregue a planilha de entrada", type=["xlsx"])
-
     # URL do arquivo de exemplo no GitHub
     planilha_url = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Dados_Estagio_Exemplo.xlsx"
 
@@ -187,6 +184,10 @@ if opcao_entrada == "Planilha":
         file_name="Dados_Estagio_Exemplo.xlsx",
         mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     )
+
+    st.subheader("Upload da Planilha com Dados")
+    # Upload de planilha
+    arquivo_planilha = st.file_uploader("Carregue a planilha de entrada conforme a planilha Exemplo", type=["xlsx"])
 
     if arquivo_planilha is not None:
         # Limpa o DataFrame antigo no estado da sessão
