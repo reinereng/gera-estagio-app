@@ -5,6 +5,17 @@ from datetime import datetime, timedelta
 import numpy as np
 import pandas as pd
 
+from PIL import Image
+import requests
+from io import BytesIO
+
+# URL da imagem no GitHub
+image_url = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/imagens/logo_rede_unirb.jpg"
+
+# Carrega a imagem diretamente da URL
+response = requests.get(image_url)
+img = Image.open(BytesIO(response.content))
+
 # Caminho das DOCUMENTAÇÕES E IMAGENS
 
 # Função para preencher o documento de termo de compromisso
@@ -75,7 +86,7 @@ def preencher_termo(nome_aluno, caminho_modelo):
 # ----------------------- STREAMLIT ------------------------------------------
 # ----------------------------------------------------------------------------
 # Exibe a logo no topo da aplicação
-st.image("logo_rede_unirb.jpg", width=300)  # Ajuste o valor de width conforme necessário
+st.image(img, width=300)  # Ajuste o valor de width conforme necessário
 
 # Interface do Streamlit
 st.title('Gerador de documentação para Estágio Supervisionado')
