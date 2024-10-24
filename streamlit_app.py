@@ -95,7 +95,8 @@ st.title('Gerador de documentação para Estágio Supervisionado')
 opcoes_ies = [
     "Centro Universitário Unirb",
     "Centro Universitário Unirb Alagoinhas",
-    "Faculdade Diplomata"
+    "Faculdade Diplomata",
+    "Faculdade Unirb - Barreiras"
 ]
 
 # Exibe a lista suspensa para escolha da IES
@@ -116,6 +117,11 @@ elif ies_escolhida == "Centro Universitário Unirb Alagoinhas":
     doc_url_conv = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Termo_Convenio_Centro_Alagoinhas.docx"
 
 elif ies_escolhida == "Faculdade Diplomata":
+    # URL do documento no GitHub para o termo de compromisso e convênio
+    doc_url_termo = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Termo_Compromisso_Diplomata.docx"
+    doc_url_conv = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Termo_Convenio_Diplomata.docx"
+
+elif ies_escolhida == "Faculdade Unirb - Barreiras":
     # URL do documento no GitHub para o termo de compromisso e convênio
     doc_url_termo = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Termo_Compromisso_Diplomata.docx"
     doc_url_conv = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Termo_Convenio_Diplomata.docx"
