@@ -123,8 +123,8 @@ elif ies_escolhida == "Faculdade Diplomata":
 
 elif ies_escolhida == "Faculdade Unirb - Barreiras":
     # URL do documento no GitHub para o termo de compromisso e convênio
-    doc_url_termo = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Termo_Compromisso_Diplomata.docx"
-    doc_url_conv = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Termo_Convenio_Diplomata.docx"
+    doc_url_termo = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Termo_Compromisso_Barreiras.docx"
+    doc_url_conv = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Termo_Convenio_Barreiras.docx"
 
 response_termo = requests.get(doc_url_termo)
 caminho_termo = Document(BytesIO(response_termo.content))
