@@ -190,7 +190,7 @@ if tipo_documento == "Trabalho de Conclução de Curso":
         c3, c4 = st.columns(2)
         with c3:
             data_defesa = st.date_input("Data de Início do Estágio:")
-            Modalidade = st.selectbox(["GoogoleMeet", "Presencial"])
+            Modalidade = st.selectbox("Modalidade", ["GoogoleMeet", "Presencial"])
             orientador = st.selectbox("Escolha o Professor Orientador:", opcoes_Professor)
             banca1 = st.selectbox("Escolha o Professor 01 da Banca", ["Outros"] + opcoes_Professor )
             if banca1 == "Outros":
