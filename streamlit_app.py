@@ -111,6 +111,22 @@ tipo_documento = st.radio(
     ("Estágio", "Trabalho de Conclução de Curso")
 )
 
+# Escolha do método de entrada
+opcao_entrada = st.radio(
+    "Como você gostaria de inserir os dados?",
+    ("Manual", "Planilha")
+)
+# Lista de opções de IES
+opcoes_Professor = [
+    "Reiner Requião",
+    "Anderson Ravanny",
+    "Francianne Oliveira",
+    "Luciene Vasconcelos",
+    "Patrícia Medeiros",
+    "Rejane da Costa",
+    ]
+
+
 # =======================================   TCC   ==========================================
 if tipo_documento == "Trabalho de Conclução de Curso":
     
@@ -126,6 +142,9 @@ if tipo_documento == "Trabalho de Conclução de Curso":
 
     # Exibe a opção escolhida
     st.write(f"Você selecionou: {ies_escolhida}")
+    
+    response_ata = requests.get(doc_url_ata)
+    caminho_ata = Document(BytesIO(response_ata.content))
 
 
 # ======================================= ESTÁGIO ==========================================
@@ -160,18 +179,8 @@ if tipo_documento == "Estágio":
 
     dados_ies = "AMERICA EDUCACIONAL S.A - CENTRO UNIVERSITÁRIO UNIRB - SALVADOR, situado à Av. Tamburugy, 474 - Patamares, Salvador - BA, CEP: 41680-440, tel: (71) 3368-8300 e-mail: unirb@unirb.edu.br inscrita no CNPJ 28.844.791/0001-91 representada neste ato, por Carlos Joel Pereira, CPF: 159.659.615-53"
 
-    # Lista de opções de IES
-    opcoes_Professor = [
-        "Reiner Requião",
-        "Anderson Ravanny",
-        "Francianne Oliveira",
-        "Luciene Vasconcelos",
-        "Patrícia Medeiros",
-        "Rejane da Costa",
-        ]
-
     # Exibe a lista suspensa para escolha da IES
-    professor_escolhido = st.selectbox("Escolha a IES", opcoes_Professor)
+    professor_escolhido = st.selectbox("Escolha o Orientador do Estágio", opcoes_Professor)
 
     if professor_escolhido == "Reiner Requião":
         professor = "Reiner Requião de Souza, portador do CPF n.º 009.893.855-07 e RG nº 07584711-65 SSP/BA"
@@ -192,12 +201,6 @@ if tipo_documento == "Estágio":
 
     if 'df' not in st.session_state:
         st.session_state.df = None
-
-    # Escolha do método de entrada
-    opcao_entrada = st.radio(
-        "Como você gostaria de inserir os dados?",
-        ("Manual", "Planilha")
-    )
 
     if opcao_entrada == "Planilha":
         # URL do arquivo de exemplo no GitHub
