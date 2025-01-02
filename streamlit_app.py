@@ -175,6 +175,27 @@ if tipo_documento == "Trabalho de Conclução de Curso":
         # Botão de download para a planilha de exemplo
         st.subheader("Baixar planilha de exemplo")
         st.write("Clique no botão abaixo para baixar a planilha de exemplo para preenchimento:")
+        
+    else:
+        st.subheader("Dados do Aluno")
+        # Cria três colunas para os campos do formulário
+        c1, c2 = st.columns(2)
+        with c1:
+            nome_aluno = st.text_input("Nome do Aluno")
+        with c2:
+            matricula = st.text_input("Matrícula")    
+              
+        curso_aluno = st.text_input("Curso do Aluno")
+
+        st.subheader("Dados da Banca")
+        # Cria três colunas para os campos do formulário
+        c3, c4 = st.columns(2)
+        with c3:
+            banca1 = st.selectbox("Escolha o Professor 01 da Banca", opcoes_Professor)
+            data_defesa = st.date_input("Data de Início do Estágio")
+        with c4:
+            banca2 = st.selectbox("Escolha o Professor 02 da Banca", opcoes_Professor)    
+            notaTCC = st.number_input("Nota do TCC", min_value=5, max_value=10, value=7)
 
 # ======================================= ESTÁGIO ==========================================
 if tipo_documento == "Estágio":
@@ -208,7 +229,7 @@ if tipo_documento == "Estágio":
 
     dados_ies = "AMERICA EDUCACIONAL S.A - CENTRO UNIVERSITÁRIO UNIRB - SALVADOR, situado à Av. Tamburugy, 474 - Patamares, Salvador - BA, CEP: 41680-440, tel: (71) 3368-8300 e-mail: unirb@unirb.edu.br inscrita no CNPJ 28.844.791/0001-91 representada neste ato, por Carlos Joel Pereira, CPF: 159.659.615-53"
 
-    # Exibe a lista suspensa para escolha da IES
+    # Exibe a lista suspensa para escolha da Professor
     professor_escolhido = st.selectbox("Escolha o Orientador do Estágio", opcoes_Professor)
 
     if professor_escolhido == "Reiner Requião":
