@@ -178,25 +178,33 @@ if tipo_documento == "Trabalho de Conclução de Curso":
         # Cria três colunas para os campos do formulário
         c1, c2 = st.columns(2)
         with c1:
-            nome_aluno = st.text_input("Nome do Aluno")
+            nome_aluno = st.text_input("Nome do Aluno:")
         with c2:
-            matricula = st.text_input("Matrícula")    
+            matricula = st.text_input("Matrícula:")    
               
-        curso_aluno = st.text_input("Curso do Aluno")
+        curso_aluno = st.text_input("Curso do Aluno:")
 
         st.subheader("Dados da Banca")
         # Cria três colunas para os campos do formulário
+        titulo = st.text_input("Título do TCC:")
         c3, c4 = st.columns(2)
         with c3:
-            banca1 = st.selectbox("Escolha o Professor 01 da Banca", opcoes_Professor + ["Outro"])
-            if banca1 == "Outro":
+            data_defesa = st.date_input("Data de Início do Estágio:")
+            Modalidade = st.selectbox(["GoogoleMeet", "Presencial"])
+            orientador = st.selectbox("Escolha o Professor Orientador:", opcoes_Professor)
+            banca1 = st.selectbox("Escolha o Professor 01 da Banca", ["Outros"] + opcoes_Professor )
+            if banca1 == "Outros":
                 banca1 = st.text_input("Digite o nome do Professor 01")
-            data_defesa = st.date_input("Data de Início do Estágio")
+            banca2 = st.selectbox("Escolha o Professor 02 da Banca", opcoes_Professor + ["Outros"])
+            if banca2 == "Outros":
+                banca2 = st.text_input("Digite o nome do Professor 02")
+
         with c4:
-            banca2 = st.selectbox("Escolha o Professor 02 da Banca", ["Outro"] + opcoes_Professor )
-            if banca2 == "Outro":
-                banca2 = st.text_input("Digite o nome do Professor 02")    
-            notaTCC = st.text_input("Nota do TCC")
+            hora_defesa = st.text_input("Horário da Banca:")
+            notaTCC = st.text_input("Nota do TCC:")
+            formacao00 = st.text_input("Titulação do Orientador:")
+            formacao01 = st.text_input("Titulação do Professor 01:")
+            formacao02 = st.text_input("Titulação do Professor 02:")
 
         if st.button("Gerar Documento de Ata"):
             try:
@@ -204,15 +212,35 @@ if tipo_documento == "Trabalho de Conclução de Curso":
                 response_ata = requests.get(doc_url_ata)
                 doc_ata = Document(BytesIO(response_ata.content))
                 
-                # Preenchendo o documento com os dados
-                for paragrafo in doc_ata.paragraphs:
-                    paragrafo.text = paragrafo.text.replace("<NOME_ALUNO>", nome_aluno)
-                    paragrafo.text = paragrafo.text.replace("<MATRICULA>", matricula)
-                    paragrafo.text = paragrafo.text.replace("<CURSO_ALUNO>", curso_aluno)
-                    paragrafo.text = paragrafo.text.replace("<BANCA1>", banca1)
-                    paragrafo.text = paragrafo.text.replace("<BANCA2>", banca2)
-                    paragrafo.text = paragrafo.text.replace("<DATA_DEFESA>", data_defesa.strftime('%d/%m/%Y'))
-                    paragrafo.text = paragrafo.text.replace("<NOTA_TCC>", notaTCC)
+                # Substituir marcadores de texto
+                texto1 = "Na data de " + data_defesa + ", no horário das " + hora_defesa 
+                if Modalidade == "GoogleMeet":
+                    texto2 = ", em reunião virtual via GoogleMeet, "
+                elif Modalidade == "Presencial":
+                    texto2 = ", na sede da IES, "
+                texto2 = texto2 + "realizou-se a defesa pública do Trabalho de Conclusão de Curso – TCC do discente "             
+                texto3 = nome_aluno + ", " + matricula + ", intitulado: " + titulo + "."
+
+                paragrafo1 = texto1 + texto2 + texto3
+
+                texto4 = "A Banca Examinadora, composta pelos professores " + formacao00 + " " + orientador + " (como presidente e orientador), "
+                texto5 = formacao01 + ". " + banca1 + " e " + formacao02 + ". " + banca2
+                texto6 = ", após avaliação e deliberação, considerou o trabalho:"       
+
+                paragrafo2 = texto4 + texto5 + texto6
+                
+                indices_paragrafos = [1, 3, 5, 9, 16, 20, 23]
+
+                # Iterar sobre os parágrafos
+                for j, paragrafos in enumerate(doc_ata.paragraphs):
+                    if j in indices_paragrafos:                
+                        paragrafos.text = paragrafos.text.replace("<<CURSO>>", curso_aluno)
+                        paragrafos.text = paragrafos.text.replace("<<paragrafo1>>", paragrafo1)
+                        paragrafos.text = paragrafos.text.replace("<<paragrafo2>>", paragrafo2)
+                        paragrafos.text = paragrafos.text.replace("<<nota>>", notaTCC)
+                        paragrafos.text = paragrafos.text.replace("<<orientador>>", formacao00 + " " + orientador)
+                        paragrafos.text = paragrafos.text.replace("<<banca1>>", formacao01 + ". " + banca1)
+                        paragrafos.text = paragrafos.text.replace("<<banca2>>", formacao02 + ". " + banca2)
                 
                 # Salvando o documento preenchido
                 temp_file = tempfile.NamedTemporaryFile(delete=False, suffix=".docx")
