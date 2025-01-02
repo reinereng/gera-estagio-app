@@ -132,13 +132,16 @@ if tipo_documento == "Trabalho de Conclução de Curso":
     
     #DOCUMENTOS
     if ies_escolhida == "Centro Universitário Unirb":
-        doc_url_ata = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Ata_TCC_Centro.docx"
+        doc_url_ata  = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Python_ATA_TCC_Salvador.docx"
+        doc_url_ori  = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Python_Declaração_Orientador_Salvador.docx"
+        doc_url_resp = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Python_Termo_de_Responsabilidade_Salvador.docx"
+        doc_url_auto = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Python_Termo_de_Autorização_Salvador.docx"
     elif ies_escolhida == "Centro Universitário Unirb Alagoinhas":
-        doc_url_ata = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Ata_TCC_Centro_Alagoinhas.docx"
+        doc_url_ata = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Python_ATA_TCC_Alagoinhas.docx"
     elif ies_escolhida == "Faculdade Diplomata":
-        doc_url_ata = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Ata_TCC_Diplomata.docx"
+        doc_url_ata = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Python_ATA_TCC_Diplomata.docx"
     elif ies_escolhida == "Faculdade Unirb - Barreiras":
-        doc_url_ata = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Ata_TCC_Barreiras.docx"
+        doc_url_ata = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Python_ATA_TCC_Barreiras.docx"
 
     # Exibe a opção escolhida
     st.write(f"Você selecionou: {ies_escolhida}")
@@ -146,6 +149,32 @@ if tipo_documento == "Trabalho de Conclução de Curso":
     response_ata = requests.get(doc_url_ata)
     caminho_ata = Document(BytesIO(response_ata.content))
 
+    response_ori = requests.get(doc_url_ori)
+    caminho_ori = Document(BytesIO(response_ori.content))
+
+    response_resp = requests.get(doc_url_resp)
+    caminho_resp = Document(BytesIO(response_resp.content))
+
+    response_auto = requests.get(doc_url_auto)
+    caminho_auto = Document(BytesIO(response_auto.content))
+    
+    # Inicializa o estado da sessão para armazenar os arquivos gerados e o DataFrame
+    if 'arquivos_gerados' not in st.session_state:
+        st.session_state.arquivos_gerados = {}
+
+    if 'df' not in st.session_state:
+        st.session_state.df = None
+
+    if opcao_entrada == "Planilha":
+        # URL do arquivo de exemplo no GitHub
+        planilha_url = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Dados_Estagio_Exemplo.xlsx"
+
+        # Faz o download direto do arquivo da URL
+        response = requests.get(planilha_url)
+
+        # Botão de download para a planilha de exemplo
+        st.subheader("Baixar planilha de exemplo")
+        st.write("Clique no botão abaixo para baixar a planilha de exemplo para preenchimento:")
 
 # ======================================= ESTÁGIO ==========================================
 if tipo_documento == "Estágio":
