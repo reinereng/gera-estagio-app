@@ -146,17 +146,14 @@ if tipo_documento == "Trabalho de Conclução de Curso":
     # Exibe a opção escolhida
     st.write(f"Você selecionou: {ies_escolhida}")
     
-    response_ata = requests.get(doc_url_ata)
-    caminho_ata = Document(BytesIO(response_ata.content))
+    # response_ori = requests.get(doc_url_ori)
+    # doc_ori = Document(BytesIO(response_ori.content))
 
-    response_ori = requests.get(doc_url_ori)
-    caminho_ori = Document(BytesIO(response_ori.content))
+    # response_resp = requests.get(doc_url_resp)
+    # doc_resp = Document(BytesIO(response_resp.content))
 
-    response_resp = requests.get(doc_url_resp)
-    caminho_resp = Document(BytesIO(response_resp.content))
-
-    response_auto = requests.get(doc_url_auto)
-    caminho_auto = Document(BytesIO(response_auto.content))
+    # response_auto = requests.get(doc_url_auto)
+    # doc_auto = Document(BytesIO(response_auto.content))
     
     # Inicializa o estado da sessão para armazenar os arquivos gerados e o DataFrame
     if 'arquivos_gerados' not in st.session_state:
@@ -191,11 +188,46 @@ if tipo_documento == "Trabalho de Conclução de Curso":
         # Cria três colunas para os campos do formulário
         c3, c4 = st.columns(2)
         with c3:
-            banca1 = st.selectbox("Escolha o Professor 01 da Banca", opcoes_Professor)
+            banca1 = st.selectbox("Escolha o Professor 01 da Banca", opcoes_Professor + ["Outro"])
+            if banca1 == "Outro":
+                banca1 = st.text_input("Digite o nome do Professor 01")
             data_defesa = st.date_input("Data de Início do Estágio")
         with c4:
-            banca2 = st.selectbox("Escolha o Professor 02 da Banca", opcoes_Professor)    
-            notaTCC = st.number_input("Nota do TCC", min_value=5, max_value=10, value=7)
+            banca2 = st.selectbox("Escolha o Professor 02 da Banca", ["Outro"] + opcoes_Professor )
+            if banca2 == "Outro":
+                banca2 = st.text_input("Digite o nome do Professor 02")    
+            notaTCC = st.text_input("Nota do TCC")
+
+        if st.button("Gerar Documento de Ata"):
+            try:
+                # Baixar o modelo de documento da web
+                response_ata = requests.get(doc_url_ata)
+                doc_ata = Document(BytesIO(response_ata.content))
+                
+                # Preenchendo o documento com os dados
+                for paragrafo in doc_ata.paragraphs:
+                    paragrafo.text = paragrafo.text.replace("<NOME_ALUNO>", nome_aluno)
+                    paragrafo.text = paragrafo.text.replace("<MATRICULA>", matricula)
+                    paragrafo.text = paragrafo.text.replace("<CURSO_ALUNO>", curso_aluno)
+                    paragrafo.text = paragrafo.text.replace("<BANCA1>", banca1)
+                    paragrafo.text = paragrafo.text.replace("<BANCA2>", banca2)
+                    paragrafo.text = paragrafo.text.replace("<DATA_DEFESA>", data_defesa.strftime('%d/%m/%Y'))
+                    paragrafo.text = paragrafo.text.replace("<NOTA_TCC>", notaTCC)
+                
+                # Salvando o documento preenchido
+                temp_file = tempfile.NamedTemporaryFile(delete=False, suffix=".docx")
+                doc_ata.save(temp_file.name)
+                
+                # Botão de download do documento gerado
+                with open(temp_file.name, "rb") as file:
+                    st.download_button(
+                        label="Download da Ata de TCC",
+                        data=file,
+                        file_name=f"Ata_TCC_{nome_aluno.replace(' ', '_')}.docx",
+                        mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                    )
+            except Exception as e:
+                st.error(f"Erro ao gerar o documento: {e}")
 
 # ======================================= ESTÁGIO ==========================================
 if tipo_documento == "Estágio":
