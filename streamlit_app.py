@@ -224,7 +224,10 @@ if tipo_documento == "Trabalho de Conclução de Curso":
             formacao01 = st.selectbox("Titulação do Professor 01:", opcoes_titulo)
             formacao02 = st.selectbox("Titulação do Professor 02:", opcoes_titulo)
 
-        if st.button("Gerar Documento de Ata"):
+        if 'arquivos_temp' not in st.session_state:
+            st.session_state.arquivos_temp = {}
+
+        if st.button("Gerar Todos os Documentos"):
             # Baixar o modelo de documento da web
             response_ata = requests.get(doc_url_ata)
             doc_ata = Document(BytesIO(response_ata.content))
@@ -309,10 +312,7 @@ if tipo_documento == "Trabalho de Conclução de Curso":
                 print(f"Parágrafo {j + 1}: {paragrafos.text}")
 
                     # Salvar documentos temporariamente
-
-            if 'arquivos_temp' not in st.session_state:
-                st.session_state.arquivos_temp = {}
-                
+               
             for nome_doc, documento in [("Ata", doc_ata), 
                                     ("Declaração_Orientador", doc_ori), 
                                     ("Termo_Responsabilidade", doc_resp), 
