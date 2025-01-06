@@ -255,9 +255,9 @@ if tipo_documento == "Trabalho de Conclução de Curso":
 
     elif ies_escolhida == "Faculdade Diplomata":
         doc_url_ata = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Python_ATA_TCC_Diplomata.docx"
-        doc_url_ori  = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Python_Declaração_Orientador_Alagoinhas.docx"
-        doc_url_resp = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Python_Termo_de_Responsabilidade_Alagoinhas.docx"
-        doc_url_auto = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Python_Termo_de_Autorização_Alagoinhas.docx"
+        doc_url_ori  = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Python_Declaração_Orientador_Diplomata.docx"
+        doc_url_resp = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Python_Termo_de_Responsabilidade_Diplomata.docx"
+        doc_url_auto = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Python_Termo_de_Autorização_Diplomata.docx"
 
 
 
