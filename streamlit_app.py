@@ -309,7 +309,7 @@ if tipo_documento == "Trabalho de Conclução de Curso":
             # Criar a data por extenso
             data_defesa_ext = f"{dia} de {mes} de {ano}"
 
-            Modalidade = st.selectbox("Modalidade", ["GoogoleMeet", "Presencial"])
+            Modalidade = st.selectbox("Modalidade", ["GoogleMeet", "Presencial"])
             orientador = st.selectbox("Professor Orientador:", opcoes_Professor)
             banca1 = st.selectbox("Professor 01 da Banca", opcoes_Professor )
             if banca1 == "Outro":
@@ -336,9 +336,9 @@ if tipo_documento == "Trabalho de Conclução de Curso":
             # Substituir marcadores de texto
             texto1 = "Na data de " + data_defesa + ", no horário das " + hora_defesa 
             if Modalidade == "GoogleMeet":
-                texto1 = ", em reunião virtual via GoogleMeet, "
+                texto1 = texto1 + ", em reunião virtual via GoogleMeet, "
             elif Modalidade == "Presencial":
-                texto1 = ", na sede da IES, "
+                texto1 = texto1 + ", na sede da IES, "
             texto1 = texto1 + "realizou-se a defesa pública do Trabalho de Conclusão de Curso – TCC do discente "             
             texto1 = texto1 + nome_aluno + ", " + matricula + ", intitulado: " + titulo + "."
 
