@@ -309,7 +309,7 @@ if tipo_documento == "Trabalho de Conclução de Curso":
                 print(f"Parágrafo {j + 1}: {paragrafos.text}")
 
                     # Salvar documentos temporariamente
-            arquivos_temp = {}
+
             if 'arquivos_temp' not in st.session_state:
                 st.session_state.arquivos_temp = {}
                 
