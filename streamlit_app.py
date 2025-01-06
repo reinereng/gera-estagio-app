@@ -345,7 +345,7 @@ if tipo_documento == "Trabalho de Conclução de Curso":
             paragrafo1 = texto1
 
             texto4 = "A Banca Examinadora, composta pelos professores " + formacao00 + " " + orientador + " (como presidente e orientador), "
-            texto5 = formacao01 + ". " + banca1 + " e " + formacao02 + ". " + banca2
+            texto5 = formacao01 + " " + banca1 + " e " + formacao02 + " " + banca2
             texto6 = ", após avaliação e deliberação, considerou o trabalho:"       
 
             paragrafo2 = texto4 + texto5 + texto6
