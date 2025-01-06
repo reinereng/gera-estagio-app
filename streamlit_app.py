@@ -136,6 +136,14 @@ opcoes_titulo = [
     "Dra.",
     "Dr."
     ]
+
+# Formatar a data no formato por extenso
+meses = {
+    1: "janeiro", 2: "fevereiro", 3: "março", 4: "abril",
+    5: "maio", 6: "junho", 7: "julho", 8: "agosto",
+    9: "setembro", 10: "outubro", 11: "novembro", 12: "dezembro"
+}
+
 # =======================================   TCC   ==========================================
 if tipo_documento == "Trabalho de Conclução de Curso":
     
@@ -154,15 +162,6 @@ if tipo_documento == "Trabalho de Conclução de Curso":
 
     # Exibe a opção escolhida
     st.write(f"Você selecionou: {ies_escolhida}")
-    
-    # response_ori = requests.get(doc_url_ori)
-    # doc_ori = Document(BytesIO(response_ori.content))
-
-    # response_resp = requests.get(doc_url_resp)
-    # doc_resp = Document(BytesIO(response_resp.content))
-
-    # response_auto = requests.get(doc_url_auto)
-    # doc_auto = Document(BytesIO(response_auto.content))
     
     # Inicializa o estado da sessão para armazenar os arquivos gerados e o DataFrame
     if 'arquivos_gerados' not in st.session_state:
@@ -201,6 +200,14 @@ if tipo_documento == "Trabalho de Conclução de Curso":
             data_defesa_aux = st.date_input("Data de Início do Estágio:")
             # Formatar as datas para o formato "DD/MM/YYYY"
             data_defesa = data_defesa_aux.strftime('%d/%m/%Y')
+            # Extrair partes da data
+            dia = data_defesa_aux.day
+            mes = meses[data_defesa_aux.month]
+            ano = data_defesa_aux.year
+
+            # Criar a data por extenso
+            data_defesa_ext = f"{dia} de {mes} de {ano}"
+
             Modalidade = st.selectbox("Modalidade", ["GoogoleMeet", "Presencial"])
             orientador = st.selectbox("Professor Orientador:", opcoes_Professor)
             banca1 = st.selectbox("Professor 01 da Banca", opcoes_Professor )
@@ -218,55 +225,108 @@ if tipo_documento == "Trabalho de Conclução de Curso":
             formacao02 = st.selectbox("Titulação do Professor 02:", opcoes_titulo)
 
         if st.button("Gerar Documento de Ata"):
-            try:
-                # Baixar o modelo de documento da web
-                response_ata = requests.get(doc_url_ata)
-                doc_ata = Document(BytesIO(response_ata.content))
-                
-                # Substituir marcadores de texto
-                texto1 = "Na data de " + data_defesa + ", no horário das " + hora_defesa 
-                if Modalidade == "GoogleMeet":
-                    texto1 = ", em reunião virtual via GoogleMeet, "
-                elif Modalidade == "Presencial":
-                    texto1 = ", na sede da IES, "
-                texto1 = texto1 + "realizou-se a defesa pública do Trabalho de Conclusão de Curso – TCC do discente "             
-                texto1 = texto1 + nome_aluno + ", " + matricula + ", intitulado: " + titulo + "."
+            # Baixar o modelo de documento da web
+            response_ata = requests.get(doc_url_ata)
+            doc_ata = Document(BytesIO(response_ata.content))
+            
+            # Substituir marcadores de texto
+            texto1 = "Na data de " + data_defesa + ", no horário das " + hora_defesa 
+            if Modalidade == "GoogleMeet":
+                texto1 = ", em reunião virtual via GoogleMeet, "
+            elif Modalidade == "Presencial":
+                texto1 = ", na sede da IES, "
+            texto1 = texto1 + "realizou-se a defesa pública do Trabalho de Conclusão de Curso – TCC do discente "             
+            texto1 = texto1 + nome_aluno + ", " + matricula + ", intitulado: " + titulo + "."
 
-                paragrafo1 = texto1
+            paragrafo1 = texto1
 
-                texto4 = "A Banca Examinadora, composta pelos professores " + formacao00 + " " + orientador + " (como presidente e orientador), "
-                texto5 = formacao01 + ". " + banca1 + " e " + formacao02 + ". " + banca2
-                texto6 = ", após avaliação e deliberação, considerou o trabalho:"       
+            texto4 = "A Banca Examinadora, composta pelos professores " + formacao00 + " " + orientador + " (como presidente e orientador), "
+            texto5 = formacao01 + ". " + banca1 + " e " + formacao02 + ". " + banca2
+            texto6 = ", após avaliação e deliberação, considerou o trabalho:"       
 
-                paragrafo2 = texto4 + texto5 + texto6
-                
-                indices_paragrafos = [1, 3, 5, 9, 16, 20, 23]
+            paragrafo2 = texto4 + texto5 + texto6
+            
+            indices_paragrafos = [1, 3, 5, 9, 16, 20, 23]
 
-                # Iterar sobre os parágrafos
-                for j, paragrafos in enumerate(doc_ata.paragraphs):
-                    if j in indices_paragrafos:                
-                        paragrafos.text = paragrafos.text.replace("<<CURSO>>", curso_aluno)
-                        paragrafos.text = paragrafos.text.replace("<<paragrafo1>>", paragrafo1)
-                        paragrafos.text = paragrafos.text.replace("<<paragrafo2>>", paragrafo2)
-                        paragrafos.text = paragrafos.text.replace("<<nota>>", notaTCC)
-                        paragrafos.text = paragrafos.text.replace("<<orientador>>", formacao00 + " " + orientador)
-                        paragrafos.text = paragrafos.text.replace("<<banca1>>", formacao01 + ". " + banca1)
-                        paragrafos.text = paragrafos.text.replace("<<banca2>>", formacao02 + ". " + banca2)
-                
-                # Salvando o documento preenchido
+            # Iterar sobre os parágrafos
+            for j, paragrafos in enumerate(doc_ata.paragraphs):
+                if j in indices_paragrafos:                
+                    paragrafos.text = paragrafos.text.replace("<<CURSO>>", curso_aluno)
+                    paragrafos.text = paragrafos.text.replace("<<paragrafo1>>", paragrafo1)
+                    paragrafos.text = paragrafos.text.replace("<<paragrafo2>>", paragrafo2)
+                    paragrafos.text = paragrafos.text.replace("<<nota>>", notaTCC)
+                    paragrafos.text = paragrafos.text.replace("<<orientador>>", formacao00 + " " + orientador)
+                    paragrafos.text = paragrafos.text.replace("<<banca1>>", formacao01 + ". " + banca1)
+                    paragrafos.text = paragrafos.text.replace("<<banca2>>", formacao02 + ". " + banca2)
+                    
+            # Salvando o documento preenchido
+            temp_file = tempfile.NamedTemporaryFile(delete=False, suffix=".docx")
+            doc_ata.save(temp_file.name)
+            
+            response_ori = requests.get(doc_url_ori)
+            doc_ori = Document(BytesIO(response_ori.content))
+            
+            indices_paragrafos = [2, 5, 10]
+
+            # Iterar sobre os parágrafos
+            for j, paragrafos in enumerate(doc_ori.paragraphs):
+                if j in indices_paragrafos:                
+                    paragrafos.text = paragrafos.text.replace("<<aluno>>", nome_aluno)
+                    paragrafos.text = paragrafos.text.replace("<<titulo>>", titulo)
+                    paragrafos.text = paragrafos.text.replace("<<data>>", data_defesa_ext)
+                    paragrafos.text = paragrafos.text.replace("<<orientador>>", formacao00 + " " + orientador)
+                    paragrafos.text = paragrafos.text.replace("<<CURSO>>", curso_aluno)
+            
+            response_resp = requests.get(doc_url_resp)
+            doc_resp = Document(BytesIO(response_resp.content))
+
+            indices_paragrafos = [2, 8, 10]
+
+            # Iterar sobre os parágrafos
+            for j, paragrafos in enumerate(doc_resp.paragraphs):
+                if j in indices_paragrafos:                
+                    paragrafos.text = paragrafos.text.replace("<<aluno>>", nome_aluno)
+                    paragrafos.text = paragrafos.text.replace("<<titulo>>", titulo)
+                    paragrafos.text = paragrafos.text.replace("<<data>>", data_defesa_ext)
+                    paragrafos.text = paragrafos.text.replace("<<orientador>>", formacao00 + " " + orientador)
+                    paragrafos.text = paragrafos.text.replace("<<CURSO>>", curso_aluno)
+                                
+            response_auto = requests.get(doc_url_auto)
+            doc_auto = Document(BytesIO(response_auto.content))
+
+            indices_paragrafos = [2, 4, 8, 11]
+
+            # Iterar sobre os parágrafos
+            for j, paragrafos in enumerate(doc_auto.paragraphs):
+                if j in indices_paragrafos:                
+                    paragrafos.text = paragrafos.text.replace("<<aluno>>", nome_aluno)
+                    paragrafos.text = paragrafos.text.replace("<<titulo>>", titulo)
+                    paragrafos.text = paragrafos.text.replace("<<data>>", data_defesa_ext)
+                    paragrafos.text = paragrafos.text.replace("<<orientador>>", formacao00 + " " + orientador)
+                    paragrafos.text = paragrafos.text.replace("<<CURSO>>", curso_aluno)
+
+
+                print(f"Parágrafo {j + 1}: {paragrafos.text}")
+
+                    # Salvar documentos temporariamente
+            arquivos_temp = {}
+            for nome_doc, documento in [("Ata", doc_ata), 
+                                    ("Declaração_Orientador", doc_ori), 
+                                    ("Termo_Responsabilidade", doc_resp), 
+                                    ("Termo_Autorização", doc_auto)]:
                 temp_file = tempfile.NamedTemporaryFile(delete=False, suffix=".docx")
-                doc_ata.save(temp_file.name)
-                
-                # Botão de download do documento gerado
-                with open(temp_file.name, "rb") as file:
+                documento.save(temp_file.name)
+                arquivos_temp[nome_doc] = temp_file.name
+            
+            # Mostrar botões de download para cada documento
+            for nome_doc, caminho in arquivos_temp.items():
+                with open(caminho, "rb") as file:
                     st.download_button(
-                        label="Download da Ata de TCC",
+                        label=f"Download {nome_doc}",
                         data=file,
-                        file_name=f"Ata_TCC_{nome_aluno.replace(' ', '_')}.docx",
+                        file_name=f"{nome_doc}_{nome_aluno.replace(' ', '_')}.docx",
                         mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
                     )
-            except Exception as e:
-                st.error(f"Erro ao gerar o documento: {e}")
 
 # ======================================= ESTÁGIO ==========================================
 if tipo_documento == "Estágio":
