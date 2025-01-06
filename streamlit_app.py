@@ -324,7 +324,7 @@ if tipo_documento == "Trabalho de Conclução de Curso":
 
             # Mostrar botões de download para cada documento gerado
             if st.session_state.arquivos_temp:
-                for nome_doc, caminho in st.session_state.arquivos_temp[nome_doc].items():
+                for nome_doc, caminho in st.session_state.arquivos_temp.items():
                     with open(caminho, "rb") as file:
                         st.download_button(
                             label=f"Download {nome_doc}",
