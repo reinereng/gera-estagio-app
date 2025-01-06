@@ -96,7 +96,13 @@ opcoes_ies = [
     "Centro Universitário Unirb",
     "Centro Universitário Unirb Alagoinhas",
     "Faculdade Diplomata",
-    "Faculdade Unirb - Barreiras"
+    "Faculdade Unirb - Arapiraca",
+    "Faculdade Unirb - Aracaju",
+    "Faculdade Unirb - Barreiras",
+    "Faculdade Unirb - Feira de Santana",
+    "Faculdade Unirb - Maceió",
+    "Faculdade Unirb - Parnaíba",
+    "Faculdade Unirb - Teresina"
 ]
 
 # Exibe a lista suspensa para escolha da IES
@@ -120,14 +126,59 @@ opcao_entrada = st.radio(
 opcoes_Professor = [
     " ",
     "Outro",
-    "Reiner Requião",
-    "Anderson Ravanny",
-    "Francianne Oliveira",
-    "Luciene Vasconcelos",
-    "Patrícia Medeiros",
+    "Acidalia Carine Vieira Santos",
+    "Adriana Barros Dias",
+    "Aline Alves Bandeira",
+    "Alfredo Jorge Gomes Silva",
+    "Ana Caroline Melo dos Santos",
+    "Andre Mauricio Costa Ramos",
+    "Anderson Ravanny de Andrade Gomes",
+    "Andréa Luciane de Paula Lacerda",
+    "Anne Leticia de Oliveira Dourado",
+    "Christiane Baracho Pereira da Silva",
+    "Daniela Santos Ribeiro",
+    "Darlan Francisco Rocha dos Santos",
+    "Dilcinéa dos Santos Reis",
+    "Dorgilan Rodrigues da Cruz",
+    "Eliane Costa dos Santos Baptista",
+    "Emilia Maria Modesto de Menezes",
+    "Eudilena Laurindo de Medeiros",
+    "Érika Souza Vieira",
+    "Everton Moraes Lopes",
+    "Faustino Emilio Arenciba Jaime",
+    "Francianne Oliveira Santos",
+    "Graziele da Costa Cunha",
+    "Ivy Góis da Fonsêca Lyra",
+    "Jacyara Silva Oliveira",
+    "Jandira Dantas dos Santos",
+    "Joaquim Pedro Soares Neto",
+    "José Marques de Vasconcelos Filho",
+    "Liliane Machado Nascimento Pereira",
+    "Livia Maria Sales Lima Magalhães",
+    "Lucas Kayzan Barbosa da Silva",
+    "Luiz Sampaio Athayde Junior",
+    "Luciana Labidel dos Santos",
+    "Manoel Messias da Silva Costa",
+    "Marcel Engrácio Leal da Silva",
+    "Michelle Diana Leal Pinheiro Matos",
+    "Midiã Oliveira Lima",
+    "Natália Rafaela Souza de Lima",
+    "Nivia Nonato Silva",
+    "Patrícia Mara Medeiros",
+    "Paulo Fernando Araujo Feitosa Leite",
+    "Paulo Rogério Menezes de Almeida",
+    "Pedro Florencio Ribeiro",
+    "Rafael Tomaz de Oliveira",
+    "Reiner Requião de Souza",
     "Rejane da Costa",
-    ]
-
+    "Robert Andersson Firmiano Nicácio",
+    "Rodrigo Anselmo Cazzaniga",
+    "Sara de Almeida Borges Pithon",
+    "Sheila Coutinho Paiva Pitombo",
+    "Sueli José Pereira Correa",
+    "Taiana Gomes Libório",
+    "Victor Filgueiras Cruz Garcia"
+]
 opcoes_titulo = [
     "Bach.",
     "Esp.",
@@ -153,12 +204,62 @@ if tipo_documento == "Trabalho de Conclução de Curso":
         doc_url_ori  = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Python_Declaração_Orientador_Salvador.docx"
         doc_url_resp = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Python_Termo_de_Responsabilidade_Salvador.docx"
         doc_url_auto = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Python_Termo_de_Autorização_Salvador.docx"
+    
     elif ies_escolhida == "Centro Universitário Unirb Alagoinhas":
         doc_url_ata = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Python_ATA_TCC_Alagoinhas.docx"
-    elif ies_escolhida == "Faculdade Diplomata":
-        doc_url_ata = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Python_ATA_TCC_Diplomata.docx"
+        doc_url_ori  = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Python_Declaração_Orientador_Alagoinhas.docx"
+        doc_url_resp = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Python_Termo_de_Responsabilidade_Alagoinhas.docx"
+        doc_url_auto = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Python_Termo_de_Autorização_Alagoinhas.docx"
+
+    elif ies_escolhida == "Faculdade Unirb - Arapiraca":
+        doc_url_ata = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Python_ATA_TCC_Arapiraca.docx"
+        doc_url_ori  = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Python_Declaração_Orientador_Arapiraca.docx"
+        doc_url_resp = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Python_Termo_de_Responsabilidade_Arapiraca.docx"
+        doc_url_auto = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Python_Termo_de_Autorização_Arapiraca.docx"
+
+    elif ies_escolhida == "Faculdade Unirb - Aracaju":
+        doc_url_ata = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Python_ATA_TCC_Aracaju.docx"
+        doc_url_ori  = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Python_Declaração_Orientador_Aracaju.docx"
+        doc_url_resp = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Python_Termo_de_Responsabilidade_Aracaju.docx"
+        doc_url_auto = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Python_Termo_de_Autorização_Aracaju.docx"
+
+    elif ies_escolhida == "Faculdade Unirb - Feira de Santana":
+        doc_url_ata = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Python_ATA_TCC_Feira_de_Santana.docx"
+        doc_url_ori  = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Python_Declaração_Orientador_Feira_de_Santana.docx"
+        doc_url_resp = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Python_Termo_de_Responsabilidade_Feira_de_Santana.docx"
+        doc_url_auto = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Python_Termo_de_Autorização_Feira_de_Santana
+    
     elif ies_escolhida == "Faculdade Unirb - Barreiras":
         doc_url_ata = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Python_ATA_TCC_Barreiras.docx"
+        doc_url_ori  = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Python_Declaração_Orientador_Barreiras.docx"
+        doc_url_resp = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Python_Termo_de_Responsabilidade_Barreiras.docx"
+        doc_url_auto = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Python_Termo_de_Autorização_Barreiras.docx"
+
+    elif ies_escolhida == "Faculdade Unirb - Maceió":
+        doc_url_ata = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Python_ATA_TCC_Maceió.docx"
+        doc_url_ori  = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Python_Declaração_Orientador_Maceió.docx"
+        doc_url_resp = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Python_Termo_de_Responsabilidade_Maceió.docx"
+        doc_url_auto = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Python_Termo_de_Autorização_Maceió.docx"
+
+    elif ies_escolhida == "Faculdade Unirb - Parnaíba":
+        doc_url_ata = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Python_ATA_TCC_Parnaíba.docx"
+        doc_url_ori  = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Python_Declaração_Orientador_Parnaíba.docx"
+        doc_url_resp = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Python_Termo_de_Responsabilidade_Parnaíba.docx"
+        doc_url_auto = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Python_Termo_de_Autorização_Parnaíba.docx"
+
+    elif ies_escolhida == "Faculdade Unirb - Teresina":
+        doc_url_ata = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Python_ATA_TCC_Teresina.docx"
+        doc_url_ori  = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Python_Declaração_Orientador_Teresina.docx"
+        doc_url_resp = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Python_Termo_de_Responsabilidade_Teresina.docx"
+        doc_url_auto = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Python_Termo_de_Autorização_Teresina.docx"
+
+    elif ies_escolhida == "Faculdade Diplomata":
+        doc_url_ata = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Python_ATA_TCC_Diplomata.docx"
+        doc_url_ori  = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Python_Declaração_Orientador_Alagoinhas.docx"
+        doc_url_resp = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Python_Termo_de_Responsabilidade_Alagoinhas.docx"
+        doc_url_auto = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Python_Termo_de_Autorização_Alagoinhas.docx"
+
+
 
     # Exibe a opção escolhida
     st.write(f"Você selecionou: {ies_escolhida}")
