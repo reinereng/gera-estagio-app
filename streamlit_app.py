@@ -310,6 +310,9 @@ if tipo_documento == "Trabalho de Conclução de Curso":
 
                     # Salvar documentos temporariamente
             arquivos_temp = {}
+            if 'arquivos_temp' not in st.session_state:
+                st.session_state.arquivos_temp = {}
+                
             for nome_doc, documento in [("Ata", doc_ata), 
                                     ("Declaração_Orientador", doc_ori), 
                                     ("Termo_Responsabilidade", doc_resp), 
@@ -318,15 +321,17 @@ if tipo_documento == "Trabalho de Conclução de Curso":
                 documento.save(temp_file.name)
                 arquivos_temp[nome_doc] = temp_file.name
             
-            # Mostrar botões de download para cada documento
-            for nome_doc, caminho in arquivos_temp.items():
-                with open(caminho, "rb") as file:
-                    st.download_button(
-                        label=f"Download {nome_doc}",
-                        data=file,
-                        file_name=f"{nome_doc}_{nome_aluno.replace(' ', '_')}.docx",
-                        mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-                    )
+
+            # Mostrar botões de download para cada documento gerado
+            if st.session_state.arquivos_temp:
+                for nome_doc, caminho in arquivos_temp.items():
+                    with open(caminho, "rb") as file:
+                        st.download_button(
+                            label=f"Download {nome_doc}",
+                            data=file,
+                            file_name=f"{nome_doc}_{nome_aluno.replace(' ', '_')}.docx",
+                            mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                        )
 
 # ======================================= ESTÁGIO ==========================================
 if tipo_documento == "Estágio":
