@@ -118,6 +118,8 @@ opcao_entrada = st.radio(
 )
 # Lista de opções de IES
 opcoes_Professor = [
+    " ",
+    "Outro",
     "Reiner Requião",
     "Anderson Ravanny",
     "Francianne Oliveira",
@@ -126,7 +128,14 @@ opcoes_Professor = [
     "Rejane da Costa",
     ]
 
-
+opcoes_titulo = [
+    "Bach.",
+    "Esp.",
+    "Ma.",
+    "Me.",
+    "Dra.",
+    "Dr."
+    ]
 # =======================================   TCC   ==========================================
 if tipo_documento == "Trabalho de Conclução de Curso":
     
@@ -189,22 +198,24 @@ if tipo_documento == "Trabalho de Conclução de Curso":
         titulo = st.text_input("Título do TCC:")
         c3, c4 = st.columns(2)
         with c3:
-            data_defesa = st.date_input("Data de Início do Estágio:")
+            data_defesa_aux = st.date_input("Data de Início do Estágio:")
+            # Formatar as datas para o formato "DD/MM/YYYY"
+            data_defesa = data_defesa_aux.strftime('%d/%m/%Y')
             Modalidade = st.selectbox("Modalidade", ["GoogoleMeet", "Presencial"])
-            orientador = st.selectbox("Escolha o Professor Orientador:", opcoes_Professor)
-            banca1 = st.selectbox("Escolha o Professor 01 da Banca", ["Outros"] + opcoes_Professor )
-            if banca1 == "Outros":
+            orientador = st.selectbox("Professor Orientador:", opcoes_Professor)
+            banca1 = st.selectbox("Professor 01 da Banca", opcoes_Professor )
+            if banca1 == "Outro":
                 banca1 = st.text_input("Digite o nome do Professor 01")
-            banca2 = st.selectbox("Escolha o Professor 02 da Banca", opcoes_Professor + ["Outros"])
-            if banca2 == "Outros":
+            banca2 = st.selectbox("Professor 02 da Banca", opcoes_Professor)
+            if banca2 == "Outro":
                 banca2 = st.text_input("Digite o nome do Professor 02")
 
         with c4:
             hora_defesa = st.text_input("Horário da Banca:")
             notaTCC = st.text_input("Nota do TCC:")
-            formacao00 = st.text_input("Titulação do Orientador:")
-            formacao01 = st.text_input("Titulação do Professor 01:")
-            formacao02 = st.text_input("Titulação do Professor 02:")
+            formacao00 = st.selectbox("Titulação do Orientador:", opcoes_titulo)
+            formacao01 = st.selectbox("Titulação do Professor 01:", opcoes_titulo)
+            formacao02 = st.selectbox("Titulação do Professor 02:", opcoes_titulo)
 
         if st.button("Gerar Documento de Ata"):
             try:
