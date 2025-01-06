@@ -226,13 +226,13 @@ if tipo_documento == "Trabalho de Conclução de Curso":
                 # Substituir marcadores de texto
                 texto1 = "Na data de " + data_defesa + ", no horário das " + hora_defesa 
                 if Modalidade == "GoogleMeet":
-                    texto2 = ", em reunião virtual via GoogleMeet, "
+                    texto1 = ", em reunião virtual via GoogleMeet, "
                 elif Modalidade == "Presencial":
-                    texto2 = ", na sede da IES, "
-                texto2 = texto2 + "realizou-se a defesa pública do Trabalho de Conclusão de Curso – TCC do discente "             
-                texto3 = nome_aluno + ", " + matricula + ", intitulado: " + titulo + "."
+                    texto1 = ", na sede da IES, "
+                texto1 = texto1 + "realizou-se a defesa pública do Trabalho de Conclusão de Curso – TCC do discente "             
+                texto1 = texto1 + nome_aluno + ", " + matricula + ", intitulado: " + titulo + "."
 
-                paragrafo1 = texto1 + texto2 + texto3
+                paragrafo1 = texto1
 
                 texto4 = "A Banca Examinadora, composta pelos professores " + formacao00 + " " + orientador + " (como presidente e orientador), "
                 texto5 = formacao01 + ". " + banca1 + " e " + formacao02 + ". " + banca2
