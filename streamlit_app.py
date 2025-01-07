@@ -305,7 +305,7 @@ if tipo_documento == "Trabalho de Conclução de Curso":
         titulo = st.text_input("Título do TCC:")
         c3, c4 = st.columns(2)
         with c3:
-            data_defesa_aux = st.date_input("Data de Início do Estágio:")
+            data_defesa_aux = st.date_input("Data da defesa da Banca:")
             # Formatar as datas para o formato "DD/MM/YYYY"
             data_defesa = data_defesa_aux.strftime('%d/%m/%Y')
             # Extrair partes da data
@@ -326,7 +326,7 @@ if tipo_documento == "Trabalho de Conclução de Curso":
                 banca2 = st.text_input("Digite o nome do Professor 02")
 
         with c4:
-            hora_defesa = st.text_input("Horário da Banca:")
+            hora_defesa = st.text_input("Horário da Defesa da Banca:")
             notaTCC = st.text_input("Nota do TCC:")
             formacao00 = st.selectbox("Titulação do Orientador:", opcoes_titulo)
             formacao01 = st.selectbox("Titulação do Professor 01:", opcoes_titulo)
