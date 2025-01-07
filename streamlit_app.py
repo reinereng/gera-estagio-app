@@ -102,6 +102,7 @@ opcoes_ies = [
     "Faculdade Unirb - Feira de Santana",
     "Faculdade Unirb - Maceió",
     "Faculdade Unirb - Parnaíba",
+    "Faculdade Unirb - Piauí",
     "Faculdade Unirb - Teresina"
 ]
 
@@ -246,6 +247,12 @@ if tipo_documento == "Trabalho de Conclução de Curso":
         doc_url_ori  = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Python_Declaração_Orientador_Parnaíba.docx"
         doc_url_resp = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Python_Termo_de_Responsabilidade_Parnaíba.docx"
         doc_url_auto = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Python_Termo_de_Autorização_Parnaíba.docx"
+
+    elif ies_escolhida == "Faculdade Unirb - Piauí":
+        doc_url_ata = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Python_ATA_TCC_Piaui.docx"
+        doc_url_ori  = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Python_Declaração_Orientador_Piaui.docx"
+        doc_url_resp = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Python_Termo_de_Responsabilidade_Piaui.docx"
+        doc_url_auto = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Python_Termo_de_Autorização_Piaui.docx"
 
     elif ies_escolhida == "Faculdade Unirb - Teresina":
         doc_url_ata = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Python_ATA_TCC_Teresina.docx"
