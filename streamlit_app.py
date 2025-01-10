@@ -475,17 +475,17 @@ if tipo_documento == "Estágio":
 
     # Exibe a lista suspensa para escolha da Professor
     professor_escolhido = st.selectbox("Escolha o Orientador do Estágio", opcoes_Professor)
-
-    if professor_escolhido == "Reiner Requião":
+    
+    if professor_escolhido == "Reiner Requião de Souza":
         professor = "Reiner Requião de Souza, portador do CPF n.º 009.893.855-07 e RG nº 07584711-65 SSP/BA"
     if professor_escolhido == "Rejane da Costa":
         professor = "Rejane da Costa, portador do CPF n.º 006.411.315-93"
-    if professor_escolhido == "Francianne Oliveira":
+    if professor_escolhido == "Francianne Oliveira Santos":
         professor = "Francianne Oliveira Santos, portador do CPF n.º 016.969.575-16"
-    if professor_escolhido == "Anderson Ravanny":
+    if professor_escolhido == "Anderson Ravanny de Andrade Gomes":
         professor = "Anderson Ravanny de Andrade Gomes, portador do CPF n.º 074.662.624-06"
-    if professor_escolhido == "Luciene Vasconcelos":
-        professor = "Luciene Vasconcelos Pinto de Souza Silva, portador do CPF n.º 007.899.323-77"
+    if professor_escolhido == "Pedro Florencio Ribeiro":
+        professor = "Pedro Florencio Ribeiro, portador do CPF n.º 032.775.163-00"
     if professor_escolhido == "Patrícia Medeiros":
         professor = "Patrícia Mara Medeiros, portador do CPF n.º 165.469.298-05"
 
