@@ -460,7 +460,7 @@ if tipo_documento == "Trabalho de Conclução de Curso":
             gestor2 = st.selectbox("Quem vai assinar dos Professores da Banca", opcoes_Professor)   
         
         if Modalidade == "GoogleMeet":
-            textoOr = ", em reunião virtual via GoogleMeet."
+            textoOr = "em reunião virtual via GoogleMeet."
         elif Modalidade == "Presencial":
             textoOr = "presencialmente na sede da IES. "
             
@@ -564,11 +564,20 @@ if tipo_documento == "Trabalho de Conclução de Curso":
             temp_file = tempfile.NamedTemporaryFile(delete=False, suffix=".docx")
             doc_certB2.save(temp_file.name)
             arquivos_certificados.append(temp_file.name)
-            
+                        
+            # Verificar se a lista de arquivos gerados já está no estado da sessão
+            if 'arquivos_certificados' not in st.session_state:
+                st.session_state.arquivos_certificados = []
+
+            # Adicionar os arquivos gerados à sessão
+            for caminho in arquivos_certificados:
+                if caminho not in st.session_state.arquivos_certificados:
+                    st.session_state.arquivos_certificados.append(caminho)
+
             # Mostrar botões de download para cada documento gerado
-            if arquivos_certificados:  # Verificar se há arquivos na lista
+            if st.session_state.arquivos_certificados:  # Verificar se há arquivos na lista
                 st.subheader("Faça o download dos documentos:")
-                for idx, caminho in enumerate(arquivos_certificados):
+                for idx, caminho in enumerate(st.session_state.arquivos_certificados):
                     with open(caminho, "rb") as file:
                         st.download_button(
                             label=f"Download Certificado {idx + 1}",
