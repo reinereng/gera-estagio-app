@@ -463,7 +463,10 @@ if tipo_documento == "Trabalho de Conclução de Curso":
             textoOr = "em reunião virtual via GoogleMeet."
         elif Modalidade == "Presencial":
             textoOr = "presencialmente na sede da IES. "
-            
+        
+        if 'arquivos_certificados' not in st.session_state:
+            st.session_state.arquivos_certificados = []    
+
         if st.button("Gerar Certificados"):
             arquivos_certificados = []
             indices_paragrafos = [3, 4, 7, 8, 9]
@@ -496,7 +499,7 @@ if tipo_documento == "Trabalho de Conclução de Curso":
             temp_file = tempfile.NamedTemporaryFile(delete=False, suffix=".docx")
             doc_certOri.save(temp_file.name)
             arquivos_certificados.append(temp_file.name)
-
+                
             doc_url_certBanca  = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Python_Certificado_Banca.docx"
             response_resp = requests.get(doc_url_certBanca)
             doc_certB1 = Document(BytesIO(response_resp.content))
@@ -565,15 +568,7 @@ if tipo_documento == "Trabalho de Conclução de Curso":
             doc_certB2.save(temp_file.name)
             arquivos_certificados.append(temp_file.name)
                         
-            # Verificar se a lista de arquivos gerados já está no estado da sessão
-            if 'arquivos_certificados' not in st.session_state:
-                st.session_state.arquivos_certificados = []
-
-            # Adicionar os arquivos gerados à sessão
-            for caminho in arquivos_certificados:
-                if caminho not in st.session_state.arquivos_certificados:
-                    st.session_state.arquivos_certificados.append(caminho)
-
+            st.session_state.arquivos_certificados.extend(arquivos_certificados)
             # Mostrar botões de download para cada documento gerado
             if st.session_state.arquivos_certificados:  # Verificar se há arquivos na lista
                 st.subheader("Faça o download dos documentos:")
