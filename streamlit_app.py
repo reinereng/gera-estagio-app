@@ -442,10 +442,7 @@ if tipo_documento == "Trabalho de Conclução de Curso":
                         file_name=f"{nome_doc}_{nome_aluno.replace(' ', '_')}.docx",
                         mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
                         )
-    st.subheader("Geração de Certificados")
-    
-    if 'arquivos_certificados' not in st.session_state:
-        st.session_state.arquivos_certificados = []  
+    st.subheader("Geração de Certificados")        
     
     doc_url_certOri  = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Python_Certificado_Orientador.docx"
     response_resp = requests.get(doc_url_certOri)
@@ -464,6 +461,7 @@ if tipo_documento == "Trabalho de Conclução de Curso":
         textoOr = "presencialmente na sede da IES. "  
 
     if st.button("Gerar Certificados"):
+        st.session_state.arquivos_certificados = []  
         arquivos_certificados = []
         indices_paragrafos = [3, 4, 7, 8, 9]
             
