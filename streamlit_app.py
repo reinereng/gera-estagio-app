@@ -1,5 +1,7 @@
 import streamlit as st
 from docx import Document
+from docx.shared import Pt
+
 import tempfile
 from datetime import datetime, timedelta
 import numpy as np
@@ -473,14 +475,13 @@ if tipo_documento == "Trabalho de Conclução de Curso":
                     paragrafos.text = paragrafos.text.replace("<<gestor>>", gestor1)
                     # Iterar sobre as corridas dentro do parágrafo
                     for run in paragrafos.runs:
-                        # Alterar o tamanho da fonte
-                        run.font.size = Pt(18)  # Substitua 12 pelo tamanho desejado
-
-                        # Alterar a fonte
-                        run.font.name = "Arial"  # Substitua "Arial" pela fonte desejada
-
-                        # Aplicar negrito
-                        run.bold = True
+                        # Alterar o tamanho da fonte com tratamento para erros
+                        try:
+                            run.font.size = Pt(18)  # Substitua 18 pelo tamanho desejado
+                            run.font.name = "Arial"  # Substitua "Arial" pela fonte desejada
+                            run.bold = True  # Aplicar negrito
+                        except AttributeError as e:
+                            st.warning(f"Erro ao ajustar a formatação do texto: {e}")
             
             # Construir o nome do arquivo
             nome_arquivo = "Certificado_Orientação_TCC_" + orientador + "_Aluno_"+ nome_aluno + ".docx"
