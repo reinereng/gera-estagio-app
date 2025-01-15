@@ -101,9 +101,9 @@ opcoes_ies = [
     "Faculdade Unirb - Barreiras",
     "Faculdade Unirb - Feira de Santana",
     "Faculdade Unirb - Maceió",
-    "Faculdade Unirb - Parnaíba",
-    "Faculdade Unirb - Piauí",
-    "Faculdade Unirb - Teresina"
+    "Faculdade Unirb Parnaíba",
+    "Faculdade Unirb Piauí",
+    "Faculdade Unirb Teresina"
 ]
 
 # Exibe a lista suspensa para escolha da IES
@@ -242,19 +242,19 @@ if tipo_documento == "Trabalho de Conclução de Curso":
         doc_url_resp = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Python_Termo_de_Responsabilidade_Maceió.docx"
         doc_url_auto = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Python_Termo_de_Autorização_Maceió.docx"
 
-    elif ies_escolhida == "Faculdade Unirb - Parnaíba":
+    elif ies_escolhida == "Faculdade Unirb Parnaíba":
         doc_url_ata = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Python_ATA_TCC_Parnaíba.docx"
         doc_url_ori  = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Python_Declaração_Orientador_Parnaíba.docx"
         doc_url_resp = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Python_Termo_de_Responsabilidade_Parnaíba.docx"
         doc_url_auto = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Python_Termo_de_Autorização_Parnaíba.docx"
 
-    elif ies_escolhida == "Faculdade Unirb - Piauí":
+    elif ies_escolhida == "Faculdade Unirb Piauí":
         doc_url_ata = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Python_ATA_TCC_Piaui.docx"
         doc_url_ori  = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Python_Declaração_Orientador_Piaui.docx"
         doc_url_resp = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Python_Termo_de_Responsabilidade_Piaui.docx"
         doc_url_auto = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Python_Termo_de_Autorização_Piaui.docx"
 
-    elif ies_escolhida == "Faculdade Unirb - Teresina":
+    elif ies_escolhida == "Faculdade Unirb Teresina":
         doc_url_ata = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Python_ATA_TCC_Teresina.docx"
         doc_url_ori  = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Python_Declaração_Orientador_Teresina.docx"
         doc_url_resp = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Python_Termo_de_Responsabilidade_Teresina.docx"
@@ -440,6 +440,65 @@ if tipo_documento == "Trabalho de Conclução de Curso":
                         file_name=f"{nome_doc}_{nome_aluno.replace(' ', '_')}.docx",
                         mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
                         )
+    st.subheader("Geração de Certificados")
+    
+    #Verificar se os dados necessários estão disponíveis
+    if 'df' in st.session_state and st.session_state.df is not None:
+        df = st.session_state.df
+
+        # Caminho do modelo de certificado
+        modelo_certificado = "Modelo_Python_Certificado_Orientador.docx"
+        c10, c20 = st.columns(2)
+        with c10:
+            gestor1 = st.selectbox("Quem vai assinar do Orientador?", opcoes_Professor)
+        with c20:
+            gestor2 = st.selectbox("Quem vai assinar dos Professores da Banca", opcoes_Professor)   
+            
+        if st.button("Gerar Certificados"):
+            arquivos_certificados = []
+
+            doc = Document(modelo_certificado)
+
+            for j, paragrafos in enumerate(doc.paragraphs):
+                if j in indices_paragrafos:
+
+                    # Substituir marcadores de texto
+                    paragrafos.text = paragrafos.text.replace("<<orientador>>", formacao00 + " " + orientador)
+                    paragrafos.text = paragrafos.text.replace("<<aluno>>", nome_aluno)
+                    paragrafos.text = paragrafos.text.replace("<<titulo>>", titulo)
+
+                    paragrafos.text = paragrafos.text.replace("<<data>>", data_defesa_ext)
+                    paragrafos.text = paragrafos.text.replace("<<gestor>>", gestor1)
+                    # Iterar sobre as corridas dentro do parágrafo
+                    for run in paragrafos.runs:
+                        # Alterar o tamanho da fonte
+                        run.font.size = Pt(18)  # Substitua 12 pelo tamanho desejado
+
+                        # Alterar a fonte
+                        run.font.name = "Arial"  # Substitua "Arial" pela fonte desejada
+
+                        # Aplicar negrito
+                        run.bold = True
+            # Construir o nome do arquivo
+            nome_arquivo = "Certificado_Orientação_TCC_" + orientador + "_Aluno_"+ nome_aluno + ".docx"
+            doc.save(nome_arquivo)    
+            
+            # Salvar o certificado temporariamente
+            temp_file = tempfile.NamedTemporaryFile(delete=False, suffix=".docx")
+            doc.save(temp_file.name)
+            arquivos_certificados.append(temp_file.name)
+
+            # Mostrar botões de download para cada documento gerado
+            if st.session_state.arquivos_temp:
+                st.subheader("Faça o download dos documentos:")
+                for arquivos_certificados, caminho in st.session_state.arquivos_temp.items():
+                    with open(caminho, "rb") as file:
+                        st.download_button(
+                            label=f"Download {arquivos_certificados}",
+                            data=file,
+                            file_name=f"{arquivos_certificados}_{nome_aluno.replace(' ', '_')}.docx",
+                            mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document"    
+                            )
 
 # ======================================= ESTÁGIO ==========================================
 if tipo_documento == "Estágio":
@@ -464,6 +523,16 @@ if tipo_documento == "Estágio":
         # URL do documento no GitHub para o termo de compromisso e convênio
         doc_url_termo = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Termo_Compromisso_Barreiras.docx"
         doc_url_conv = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Termo_Convenio_Barreiras.docx"
+
+    elif ies_escolhida == "Faculdade Unirb Parnaíba":
+        # URL do documento no GitHub para o termo de compromisso e convênio
+        doc_url_termo = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Termo_Compromisso_Parnaíba.docx"
+        doc_url_conv = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Termo_Convenio_Parnaíba.docx"
+
+    elif ies_escolhida == "Faculdade Unirb Piauí":
+        # URL do documento no GitHub para o termo de compromisso e convênio
+        doc_url_termo = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Termo_Compromisso_Piaui.docx"
+        doc_url_conv = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Termo_Convenio_Piaui.docx"
 
     response_termo = requests.get(doc_url_termo)
     caminho_termo = Document(BytesIO(response_termo.content))
