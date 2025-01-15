@@ -444,142 +444,140 @@ if tipo_documento == "Trabalho de Conclução de Curso":
                         )
     st.subheader("Geração de Certificados")
     
-    #Verificar se os dados necessários estão disponíveis
-    if st.button("Gerar Todos os Documentos"):
-        if 'arquivos_certificados' not in st.session_state:
-            st.session_state.arquivos_certificados = []  
+    if 'arquivos_certificados' not in st.session_state:
+        st.session_state.arquivos_certificados = []  
+    
+    doc_url_certOri  = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Python_Certificado_Orientador.docx"
+    response_resp = requests.get(doc_url_certOri)
+    doc_certOri = Document(BytesIO(response_resp.content))
+    
+    # Caminho do modelo de certificado
+    c10, c20 = st.columns(2)
+    with c10:
+        gestor1 = st.selectbox("Quem vai assinar do Orientador?", opcoes_Professor)
+    with c20:
+        gestor2 = st.selectbox("Quem vai assinar dos Professores da Banca", opcoes_Professor)   
+    
+    if Modalidade == "GoogleMeet":
+        textoOr = "em reunião virtual via GoogleMeet."
+    elif Modalidade == "Presencial":
+        textoOr = "presencialmente na sede da IES. "  
+
+    if st.button("Gerar Certificados"):
+        arquivos_certificados = []
+        indices_paragrafos = [3, 4, 7, 8, 9]
+            
+        for j, paragrafos in enumerate(doc_certOri.paragraphs):
+            if j in indices_paragrafos:
+
+                # Substituir marcadores de texto
+                paragrafos.text = paragrafos.text.replace("<<orientador>>", formacao00 + " " + orientador)
+                paragrafos.text = paragrafos.text.replace("<<aluno>>", nome_aluno)
+                paragrafos.text = paragrafos.text.replace("<<titulo>>", titulo)
+
+                paragrafos.text = paragrafos.text.replace("<<data>>", data_defesa_ext)
+                paragrafos.text = paragrafos.text.replace("<<tipo>>", textoOr)
+                paragrafos.text = paragrafos.text.replace("<<gestor2>>", gestor1)
+                # Iterar sobre as corridas dentro do parágrafo
+                for run in paragrafos.runs:
+                    # Alterar o tamanho da fonte com tratamento para erros
+                    try:
+                        run.font.size = Pt(18)  # Substitua 18 pelo tamanho desejado
+                        run.font.name = "Arial"  # Substitua "Arial" pela fonte desejada
+                        run.bold = True  # Aplicar negrito
+                    except AttributeError as e:
+                        st.warning(f"Erro ao ajustar a formatação do texto: {e}")
         
-        doc_url_certOri  = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Python_Certificado_Orientador.docx"
-        response_resp = requests.get(doc_url_certOri)
-        doc_certOri = Document(BytesIO(response_resp.content))
+        # Construir o nome do arquivo
+        nome_arquivo = "Certificado_Orientação_TCC_" + orientador + "_Aluno_"+ nome_aluno + ".docx"
+    
+        # Salvar o certificado temporariamente
+        temp_file = tempfile.NamedTemporaryFile(delete=False, suffix=".docx")
+        doc_certOri.save(temp_file.name)
+        arquivos_certificados.append(temp_file.name)
+            
+        doc_url_certBanca  = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Python_Certificado_Banca.docx"
+        response_resp = requests.get(doc_url_certBanca)
+        doc_certB1 = Document(BytesIO(response_resp.content))
+
+        indices_paragrafos = [3, 4, 5, 6, 7, 8, 9]
         
-        # Caminho do modelo de certificado
-        c10, c20 = st.columns(2)
-        with c10:
-            gestor1 = st.selectbox("Quem vai assinar do Orientador?", opcoes_Professor)
-        with c20:
-            gestor2 = st.selectbox("Quem vai assinar dos Professores da Banca", opcoes_Professor)   
+        for j, paragrafos in enumerate(doc_certB1.paragraphs):
+            if j in indices_paragrafos:
+
+                # Substituir marcadores de texto
+                paragrafos.text = paragrafos.text.replace("<<banca1>>", formacao01 + " " + banca1)
+                paragrafos.text = paragrafos.text.replace("<<aluno>>", nome_aluno)
+                paragrafos.text = paragrafos.text.replace("<<titulo>>", titulo)
+
+                paragrafos.text = paragrafos.text.replace("<<data>>", data_defesa_ext)
+                paragrafos.text = paragrafos.text.replace("<<tipo>>", textoOr)
+                paragrafos.text = paragrafos.text.replace("<<gestor1>>", gestor2)
+
+                # Iterar sobre as corridas dentro do parágrafo
+                for run in paragrafos.runs:
+                    # Alterar o tamanho da fonte com tratamento para erros
+                    try:
+                        run.font.size = Pt(18)  # Substitua 18 pelo tamanho desejado
+                        run.font.name = "Arial"  # Substitua "Arial" pela fonte desejada
+                        run.bold = True  # Aplicar negrito
+                    except AttributeError as e:
+                        st.warning(f"Erro ao ajustar a formatação do texto: {e}")
         
-        if Modalidade == "GoogleMeet":
-            textoOr = "em reunião virtual via GoogleMeet."
-        elif Modalidade == "Presencial":
-            textoOr = "presencialmente na sede da IES. "  
-
-        if st.button("Gerar Certificados"):
-            arquivos_certificados = []
-            indices_paragrafos = [3, 4, 7, 8, 9]
-            
-            for j, paragrafos in enumerate(doc_certOri.paragraphs):
-                if j in indices_paragrafos:
-
-                    # Substituir marcadores de texto
-                    paragrafos.text = paragrafos.text.replace("<<orientador>>", formacao00 + " " + orientador)
-                    paragrafos.text = paragrafos.text.replace("<<aluno>>", nome_aluno)
-                    paragrafos.text = paragrafos.text.replace("<<titulo>>", titulo)
-
-                    paragrafos.text = paragrafos.text.replace("<<data>>", data_defesa_ext)
-                    paragrafos.text = paragrafos.text.replace("<<tipo>>", textoOr)
-                    paragrafos.text = paragrafos.text.replace("<<gestor2>>", gestor1)
-                    # Iterar sobre as corridas dentro do parágrafo
-                    for run in paragrafos.runs:
-                        # Alterar o tamanho da fonte com tratamento para erros
-                        try:
-                            run.font.size = Pt(18)  # Substitua 18 pelo tamanho desejado
-                            run.font.name = "Arial"  # Substitua "Arial" pela fonte desejada
-                            run.bold = True  # Aplicar negrito
-                        except AttributeError as e:
-                            st.warning(f"Erro ao ajustar a formatação do texto: {e}")
-            
-            # Construir o nome do arquivo
-            nome_arquivo = "Certificado_Orientação_TCC_" + orientador + "_Aluno_"+ nome_aluno + ".docx"
+        # Construir o nome do arquivo
+        nome_arquivo = "Certificado_Banca_TCC_" + banca1 + "_Aluno_"+ nome_aluno + ".docx"
+    
+        # Salvar o certificado temporariamente
+        temp_file = tempfile.NamedTemporaryFile(delete=False, suffix=".docx")
+        doc_certB1.save(temp_file.name)
+        arquivos_certificados.append(temp_file.name)
         
-            # Salvar o certificado temporariamente
-            temp_file = tempfile.NamedTemporaryFile(delete=False, suffix=".docx")
-            doc_certOri.save(temp_file.name)
-            arquivos_certificados.append(temp_file.name)
-                
-            doc_url_certBanca  = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Python_Certificado_Banca.docx"
-            response_resp = requests.get(doc_url_certBanca)
-            doc_certB1 = Document(BytesIO(response_resp.content))
-
-            indices_paragrafos = [3, 4, 5, 6, 7, 8, 9]
-            
-            for j, paragrafos in enumerate(doc_certB1.paragraphs):
-                if j in indices_paragrafos:
-
-                    # Substituir marcadores de texto
-                    paragrafos.text = paragrafos.text.replace("<<banca1>>", formacao01 + " " + banca1)
-                    paragrafos.text = paragrafos.text.replace("<<aluno>>", nome_aluno)
-                    paragrafos.text = paragrafos.text.replace("<<titulo>>", titulo)
-
-                    paragrafos.text = paragrafos.text.replace("<<data>>", data_defesa_ext)
-                    paragrafos.text = paragrafos.text.replace("<<tipo>>", textoOr)
-                    paragrafos.text = paragrafos.text.replace("<<gestor1>>", gestor2)
-
-                    # Iterar sobre as corridas dentro do parágrafo
-                    for run in paragrafos.runs:
-                        # Alterar o tamanho da fonte com tratamento para erros
-                        try:
-                            run.font.size = Pt(18)  # Substitua 18 pelo tamanho desejado
-                            run.font.name = "Arial"  # Substitua "Arial" pela fonte desejada
-                            run.bold = True  # Aplicar negrito
-                        except AttributeError as e:
-                            st.warning(f"Erro ao ajustar a formatação do texto: {e}")
-            
-            # Construir o nome do arquivo
-            nome_arquivo = "Certificado_Banca_TCC_" + banca1 + "_Aluno_"+ nome_aluno + ".docx"
+        doc_certB2 = Document(BytesIO(response_resp.content))
         
-            # Salvar o certificado temporariamente
-            temp_file = tempfile.NamedTemporaryFile(delete=False, suffix=".docx")
-            doc_certB1.save(temp_file.name)
-            arquivos_certificados.append(temp_file.name)
-            
-            doc_certB2 = Document(BytesIO(response_resp.content))
-            
-            for j, paragrafos in enumerate(doc_certB1.paragraphs):
-                if j in indices_paragrafos:
+        for j, paragrafos in enumerate(doc_certB1.paragraphs):
+            if j in indices_paragrafos:
 
-                    # Substituir marcadores de texto
-                    paragrafos.text = paragrafos.text.replace("<<banca1>>", formacao02 + " " + banca2)
-                    paragrafos.text = paragrafos.text.replace("<<aluno>>", nome_aluno)
-                    paragrafos.text = paragrafos.text.replace("<<titulo>>", titulo)
+                # Substituir marcadores de texto
+                paragrafos.text = paragrafos.text.replace("<<banca1>>", formacao02 + " " + banca2)
+                paragrafos.text = paragrafos.text.replace("<<aluno>>", nome_aluno)
+                paragrafos.text = paragrafos.text.replace("<<titulo>>", titulo)
 
-                    paragrafos.text = paragrafos.text.replace("<<data>>", data_defesa_ext)
-                    paragrafos.text = paragrafos.text.replace("<<tipo>>", textoOr)
-                    paragrafos.text = paragrafos.text.replace("<<gestor1>>", gestor2)
+                paragrafos.text = paragrafos.text.replace("<<data>>", data_defesa_ext)
+                paragrafos.text = paragrafos.text.replace("<<tipo>>", textoOr)
+                paragrafos.text = paragrafos.text.replace("<<gestor1>>", gestor2)
 
-                    # Iterar sobre as corridas dentro do parágrafo
-                    for run in paragrafos.runs:
-                        # Alterar o tamanho da fonte com tratamento para erros
-                        try:
-                            run.font.size = Pt(18)  # Substitua 18 pelo tamanho desejado
-                            run.font.name = "Arial"  # Substitua "Arial" pela fonte desejada
-                            run.bold = True  # Aplicar negrito
-                        except AttributeError as e:
-                            st.warning(f"Erro ao ajustar a formatação do texto: {e}")
-            
-            # Construir o nome do arquivo
-            nome_arquivo = "Certificado_Banca_TCC_" + banca2 + "_Aluno_"+ nome_aluno + ".docx"
+                # Iterar sobre as corridas dentro do parágrafo
+                for run in paragrafos.runs:
+                    # Alterar o tamanho da fonte com tratamento para erros
+                    try:
+                        run.font.size = Pt(18)  # Substitua 18 pelo tamanho desejado
+                        run.font.name = "Arial"  # Substitua "Arial" pela fonte desejada
+                        run.bold = True  # Aplicar negrito
+                    except AttributeError as e:
+                        st.warning(f"Erro ao ajustar a formatação do texto: {e}")
         
-            # Salvar o certificado temporariamente
-            temp_file = tempfile.NamedTemporaryFile(delete=False, suffix=".docx")
-            doc_certB2.save(temp_file.name)
-            arquivos_certificados.append(temp_file.name)
-                        
-            st.session_state.arquivos_certificados.extend(arquivos_certificados)
-            # Mostrar botões de download para cada documento gerado
-            if st.session_state.arquivos_certificados:  # Verificar se há arquivos na lista
-                st.subheader("Faça o download dos documentos:")
-                for idx, caminho in enumerate(st.session_state.arquivos_certificados):
-                    with open(caminho, "rb") as file:
-                        st.download_button(
-                            label=f"Download Certificado {idx + 1}",
-                            data=file,
-                            file_name=f"Certificado_{idx + 1}_{nome_aluno.replace(' ', '_')}.docx",
-                            mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-                        )
-            else:
-                st.warning("Nenhum arquivo foi gerado. Verifique os dados fornecidos.")
+        # Construir o nome do arquivo
+        nome_arquivo = "Certificado_Banca_TCC_" + banca2 + "_Aluno_"+ nome_aluno + ".docx"
+    
+        # Salvar o certificado temporariamente
+        temp_file = tempfile.NamedTemporaryFile(delete=False, suffix=".docx")
+        doc_certB2.save(temp_file.name)
+        arquivos_certificados.append(temp_file.name)
+                    
+        st.session_state.arquivos_certificados.extend(arquivos_certificados)
+        # Mostrar botões de download para cada documento gerado
+        if st.session_state.arquivos_certificados:  # Verificar se há arquivos na lista
+            st.subheader("Faça o download dos documentos:")
+            for idx, caminho in enumerate(st.session_state.arquivos_certificados):
+                with open(caminho, "rb") as file:
+                    st.download_button(
+                        label=f"Download Certificado {idx + 1}",
+                        data=file,
+                        file_name=f"Certificado_{idx + 1}_{nome_aluno.replace(' ', '_')}.docx",
+                        mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                    )
+        else:
+            st.warning("Nenhum arquivo foi gerado. Verifique os dados fornecidos.")
 
 # ======================================= ESTÁGIO ==========================================
 if tipo_documento == "Estágio":
