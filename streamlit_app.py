@@ -459,8 +459,7 @@ if tipo_documento == "Trabalho de Conclução de Curso":
         textoOr = "em reunião virtual via GoogleMeet."
     elif Modalidade == "Presencial":
         textoOr = "presencialmente na sede da IES. "  
-
-    st.session_state.arquivos_certificados = []  
+    
     if st.button("Gerar Certificados"):
         st.session_state.arquivos_certificados = []  
         arquivos_certificados = []
