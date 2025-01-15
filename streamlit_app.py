@@ -563,19 +563,20 @@ if tipo_documento == "Trabalho de Conclução de Curso":
         arquivos_certificados.append(temp_file.name)
                     
         st.session_state.arquivos_certificados.extend(arquivos_certificados)
-        # Mostrar botões de download para cada documento gerado
-        if st.session_state.arquivos_certificados:  # Verificar se há arquivos na lista
-            st.subheader("Faça o download dos documentos:")
-            for idx, caminho in enumerate(st.session_state.arquivos_certificados):
-                with open(caminho, "rb") as file:
-                    st.download_button(
-                        label=f"Download Certificado {idx + 1}",
-                        data=file,
-                        file_name=f"Certificado_{idx + 1}_{nome_aluno.replace(' ', '_')}.docx",
-                        mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-                    )
-        else:
-            st.warning("Nenhum arquivo foi gerado. Verifique os dados fornecidos.")
+        
+    # Mostrar botões de download para cada documento gerado
+    if st.session_state.arquivos_certificados:  # Verificar se há arquivos na lista
+        st.subheader("Faça o download dos documentos:")
+        for idx, caminho in enumerate(st.session_state.arquivos_certificados):
+            with open(caminho, "rb") as file:
+                st.download_button(
+                    label=f"Download Certificado {idx + 1}",
+                    data=file,
+                    file_name=f"Certificado_{idx + 1}_{nome_aluno.replace(' ', '_')}.docx",
+                    mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                )
+    else:
+        st.warning("Nenhum arquivo foi gerado. Verifique os dados fornecidos.")
 
 # ======================================= ESTÁGIO ==========================================
 if tipo_documento == "Estágio":
