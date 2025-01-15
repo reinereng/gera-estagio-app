@@ -459,7 +459,8 @@ if tipo_documento == "Trabalho de Conclução de Curso":
             
         if st.button("Gerar Certificados"):
             arquivos_certificados = []
-
+            indices_paragrafos = [3, 4, 5]
+            
             for j, paragrafos in enumerate(doc_certOri.paragraphs):
                 if j in indices_paragrafos:
 
@@ -483,8 +484,7 @@ if tipo_documento == "Trabalho de Conclução de Curso":
             
             # Construir o nome do arquivo
             nome_arquivo = "Certificado_Orientação_TCC_" + orientador + "_Aluno_"+ nome_aluno + ".docx"
-            doc_certOri.save(nome_arquivo)    
-            
+           
             # Salvar o certificado temporariamente
             temp_file = tempfile.NamedTemporaryFile(delete=False, suffix=".docx")
             doc_certOri.save(temp_file.name)
