@@ -458,10 +458,15 @@ if tipo_documento == "Trabalho de Conclução de Curso":
             gestor1 = st.selectbox("Quem vai assinar do Orientador?", opcoes_Professor)
         with c20:
             gestor2 = st.selectbox("Quem vai assinar dos Professores da Banca", opcoes_Professor)   
+        
+        if Modalidade == "GoogleMeet":
+            textoOr = ", em reunião virtual via GoogleMeet."
+        elif Modalidade == "Presencial":
+            textoOr = "presencialmente na sede da IES. "
             
         if st.button("Gerar Certificados"):
             arquivos_certificados = []
-            indices_paragrafos = [3, 4, 5]
+            indices_paragrafos = [3, 4, 7, 8, 9]
             
             for j, paragrafos in enumerate(doc_certOri.paragraphs):
                 if j in indices_paragrafos:
@@ -472,7 +477,8 @@ if tipo_documento == "Trabalho de Conclução de Curso":
                     paragrafos.text = paragrafos.text.replace("<<titulo>>", titulo)
 
                     paragrafos.text = paragrafos.text.replace("<<data>>", data_defesa_ext)
-                    paragrafos.text = paragrafos.text.replace("<<gestor>>", gestor1)
+                    paragrafos.text = paragrafos.text.replace("<<tipo>>", textoOr)
+                    paragrafos.text = paragrafos.text.replace("<<gestor2>>", gestor1)
                     # Iterar sobre as corridas dentro do parágrafo
                     for run in paragrafos.runs:
                         # Alterar o tamanho da fonte com tratamento para erros
