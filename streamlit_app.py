@@ -442,7 +442,11 @@ if tipo_documento == "Trabalho de Conclução de Curso":
                         file_name=f"{nome_doc}_{nome_aluno.replace(' ', '_')}.docx",
                         mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
                         )
-    st.subheader("Geração de Certificados")        
+    # Inicializa a lista de arquivos no estado da sessão, se ainda não existir
+    # if 'arquivos_certificados' not in st.session_state:
+        # st.session_state.arquivos_certificados = []
+
+    st.subheader("Geração de Certificados")   
     
     doc_url_certOri  = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Python_Certificado_Orientador.docx"
     response_resp = requests.get(doc_url_certOri)
@@ -565,18 +569,19 @@ if tipo_documento == "Trabalho de Conclução de Curso":
         st.session_state.arquivos_certificados.extend(arquivos_certificados)
         
     # Mostrar botões de download para cada documento gerado
-    if st.session_state.arquivos_certificados:  # Verificar se há arquivos na lista
-        st.subheader("Faça o download dos documentos:")
-        for idx, caminho in enumerate(st.session_state.arquivos_certificados):
-            with open(caminho, "rb") as file:
-                st.download_button(
-                    label=f"Download Certificado {idx + 1}",
-                    data=file,
-                    file_name=f"Certificado_{idx + 1}_{nome_aluno.replace(' ', '_')}.docx",
-                    mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-                )
-    else:
-        st.warning("Nenhum arquivo foi gerado. Verifique os dados fornecidos.")
+    if 'arquivos_certificados' in st.session_state:
+        if st.session_state.arquivos_certificados:  # Verificar se há arquivos na lista
+            st.subheader("Faça o download dos documentos:")
+            for idx, caminho in enumerate(st.session_state.arquivos_certificados):
+                with open(caminho, "rb") as file:
+                    st.download_button(
+                        label=f"Download Certificado {idx + 1}",
+                        data=file,
+                        file_name=f"Certificado_{idx + 1}_{nome_aluno.replace(' ', '_')}.docx",
+                        mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                    )
+        else:
+            st.warning("Nenhum arquivo foi gerado. Verifique os dados fornecidos.")
 
 # ======================================= ESTÁGIO ==========================================
 if tipo_documento == "Estágio":
