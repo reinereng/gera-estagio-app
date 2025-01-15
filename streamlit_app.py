@@ -501,7 +501,7 @@ if tipo_documento == "Trabalho de Conclução de Curso":
             response_resp = requests.get(doc_url_certBanca)
             doc_certB1 = Document(BytesIO(response_resp.content))
 
-            indices_paragrafos = [3, 4, 7, 8, 9]
+            indices_paragrafos = [3, 4, 5, 6 7, 8, 9]
             
             for j, paragrafos in enumerate(doc_certB1.paragraphs):
                 if j in indices_paragrafos:
@@ -513,7 +513,7 @@ if tipo_documento == "Trabalho de Conclução de Curso":
 
                     paragrafos.text = paragrafos.text.replace("<<data>>", data_defesa_ext)
                     paragrafos.text = paragrafos.text.replace("<<tipo>>", textoOr)
-                    paragrafos.text = paragrafos.text.replace("<<gestor1>>", gestor1)
+                    paragrafos.text = paragrafos.text.replace("<<gestor1>>", gestor2)
 
                     # Iterar sobre as corridas dentro do parágrafo
                     for run in paragrafos.runs:
@@ -532,7 +532,41 @@ if tipo_documento == "Trabalho de Conclução de Curso":
             temp_file = tempfile.NamedTemporaryFile(delete=False, suffix=".docx")
             doc_certB1.save(temp_file.name)
             arquivos_certificados.append(temp_file.name)
-                
+            
+            doc_certB2 = Document(BytesIO(response_resp.content))
+
+            indices_paragrafos = [3, 4, 5, 6 7, 8, 9]
+            
+            for j, paragrafos in enumerate(doc_certB1.paragraphs):
+                if j in indices_paragrafos:
+
+                    # Substituir marcadores de texto
+                    paragrafos.text = paragrafos.text.replace("<<banca1>>", formacao02 + " " + banca2)
+                    paragrafos.text = paragrafos.text.replace("<<aluno>>", nome_aluno)
+                    paragrafos.text = paragrafos.text.replace("<<titulo>>", titulo)
+
+                    paragrafos.text = paragrafos.text.replace("<<data>>", data_defesa_ext)
+                    paragrafos.text = paragrafos.text.replace("<<tipo>>", textoOr)
+                    paragrafos.text = paragrafos.text.replace("<<gestor1>>", gestor2)
+
+                    # Iterar sobre as corridas dentro do parágrafo
+                    for run in paragrafos.runs:
+                        # Alterar o tamanho da fonte com tratamento para erros
+                        try:
+                            run.font.size = Pt(18)  # Substitua 18 pelo tamanho desejado
+                            run.font.name = "Arial"  # Substitua "Arial" pela fonte desejada
+                            run.bold = True  # Aplicar negrito
+                        except AttributeError as e:
+                            st.warning(f"Erro ao ajustar a formatação do texto: {e}")
+            
+            # Construir o nome do arquivo
+            nome_arquivo = "Certificado_Banca_TCC_" + banca2 + "_Aluno_"+ nome_aluno + ".docx"
+        
+            # Salvar o certificado temporariamente
+            temp_file = tempfile.NamedTemporaryFile(delete=False, suffix=".docx")
+            doc_certB2.save(temp_file.name)
+            arquivos_certificados.append(temp_file.name)
+            
             # Mostrar botões de download para cada documento gerado
             if arquivos_certificados:  # Verificar se há arquivos na lista
                 st.subheader("Faça o download dos documentos:")
