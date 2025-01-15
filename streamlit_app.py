@@ -501,7 +501,7 @@ if tipo_documento == "Trabalho de Conclução de Curso":
             response_resp = requests.get(doc_url_certBanca)
             doc_certB1 = Document(BytesIO(response_resp.content))
 
-            indices_paragrafos = [3, 4, 5, 6 7, 8, 9]
+            indices_paragrafos = [3, 4, 5, 6, 7, 8, 9]
             
             for j, paragrafos in enumerate(doc_certB1.paragraphs):
                 if j in indices_paragrafos:
@@ -534,8 +534,6 @@ if tipo_documento == "Trabalho de Conclução de Curso":
             arquivos_certificados.append(temp_file.name)
             
             doc_certB2 = Document(BytesIO(response_resp.content))
-
-            indices_paragrafos = [3, 4, 5, 6 7, 8, 9]
             
             for j, paragrafos in enumerate(doc_certB1.paragraphs):
                 if j in indices_paragrafos:
