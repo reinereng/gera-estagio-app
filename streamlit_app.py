@@ -445,9 +445,12 @@ if tipo_documento == "Trabalho de Conclução de Curso":
     #Verificar se os dados necessários estão disponíveis
     if 'df' in st.session_state and st.session_state.df is not None:
         df = st.session_state.df
-
+        
+        doc_url_certOri  = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Python_Certificado_Orientador.docx"
+        response_resp = requests.get(doc_url_certOri)
+        doc_certOri = Document(BytesIO(response_resp.content))
+        
         # Caminho do modelo de certificado
-        modelo_certificado = "Modelo_Python_Certificado_Orientador.docx"
         c10, c20 = st.columns(2)
         with c10:
             gestor1 = st.selectbox("Quem vai assinar do Orientador?", opcoes_Professor)
@@ -457,9 +460,7 @@ if tipo_documento == "Trabalho de Conclução de Curso":
         if st.button("Gerar Certificados"):
             arquivos_certificados = []
 
-            doc = Document(modelo_certificado)
-
-            for j, paragrafos in enumerate(doc.paragraphs):
+            for j, paragrafos in enumerate(doc_certOri.paragraphs):
                 if j in indices_paragrafos:
 
                     # Substituir marcadores de texto
@@ -479,13 +480,14 @@ if tipo_documento == "Trabalho de Conclução de Curso":
 
                         # Aplicar negrito
                         run.bold = True
+            
             # Construir o nome do arquivo
             nome_arquivo = "Certificado_Orientação_TCC_" + orientador + "_Aluno_"+ nome_aluno + ".docx"
-            doc.save(nome_arquivo)    
+            doc_certOri.save(nome_arquivo)    
             
             # Salvar o certificado temporariamente
             temp_file = tempfile.NamedTemporaryFile(delete=False, suffix=".docx")
-            doc.save(temp_file.name)
+            doc_certOri.save(temp_file.name)
             arquivos_certificados.append(temp_file.name)
 
             # Mostrar botões de download para cada documento gerado
