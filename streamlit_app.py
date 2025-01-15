@@ -445,8 +445,9 @@ if tipo_documento == "Trabalho de Conclução de Curso":
     st.subheader("Geração de Certificados")
     
     #Verificar se os dados necessários estão disponíveis
-    if 'df' in st.session_state and st.session_state.df is not None:
-        df = st.session_state.df
+    if st.button("Gerar Todos os Documentos"):
+        if 'arquivos_certificados' not in st.session_state:
+            st.session_state.arquivos_certificados = []  
         
         doc_url_certOri  = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/modelos/Modelo_Python_Certificado_Orientador.docx"
         response_resp = requests.get(doc_url_certOri)
@@ -462,10 +463,7 @@ if tipo_documento == "Trabalho de Conclução de Curso":
         if Modalidade == "GoogleMeet":
             textoOr = "em reunião virtual via GoogleMeet."
         elif Modalidade == "Presencial":
-            textoOr = "presencialmente na sede da IES. "
-        
-        if 'arquivos_certificados' not in st.session_state:
-            st.session_state.arquivos_certificados = []    
+            textoOr = "presencialmente na sede da IES. "  
 
         if st.button("Gerar Certificados"):
             arquivos_certificados = []
