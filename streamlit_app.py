@@ -139,6 +139,7 @@ opcoes_Professor = [
     "Andréa Luciane de Paula Lacerda",
     "Anne Leticia de Oliveira Dourado",
     "Christiane Baracho Pereira da Silva",
+    "Cícera Emanuelle Gomes de Oliveira",
     "Daniela Santos Ribeiro",
     "Darlan Francisco Rocha dos Santos",
     "Dilcinéa dos Santos Reis",
