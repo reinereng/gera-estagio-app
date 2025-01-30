@@ -320,6 +320,7 @@ if tipo_documento == "Trabalho de Conclução de Curso":
             data_defesa_ext = f"{dia} de {mes} de {ano}"
 
             Modalidade = st.selectbox("Modalidade", ["GoogleMeet", "Presencial"])
+            semestre = st.text_input("Semestre de Orientação (ex.: 2024.2)")
             orientador = st.selectbox("Professor Orientador:", opcoes_Professor)
             banca1 = st.selectbox("Professor 01 da Banca", opcoes_Professor )
             if banca1 == "Outro":
@@ -331,6 +332,7 @@ if tipo_documento == "Trabalho de Conclução de Curso":
         with c4:
             hora_defesa = st.text_input("Horário da Defesa da Banca:")
             notaTCC = st.text_input("Nota do TCC:")
+            st.markdown("")  # Ou use st.write("")
             formacao00 = st.selectbox("Titulação do Orientador:", opcoes_titulo)
             formacao01 = st.selectbox("Titulação do Professor 01:", opcoes_titulo)
             formacao02 = st.selectbox("Titulação do Professor 02:", opcoes_titulo)
@@ -477,7 +479,8 @@ if tipo_documento == "Trabalho de Conclução de Curso":
                 paragrafos.text = paragrafos.text.replace("<<orientador>>", formacao00 + " " + orientador)
                 paragrafos.text = paragrafos.text.replace("<<aluno>>", nome_aluno)
                 paragrafos.text = paragrafos.text.replace("<<titulo>>", titulo)
-
+                paragrafos.text = paragrafos.text.replace("<<semestre>>", semestre)
+                
                 paragrafos.text = paragrafos.text.replace("<<data>>", data_defesa_ext)
                 paragrafos.text = paragrafos.text.replace("<<tipo>>", textoOr)
                 paragrafos.text = paragrafos.text.replace("<<gestor2>>", gestor1)
