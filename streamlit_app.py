@@ -332,8 +332,9 @@ if tipo_documento == "Trabalho de Conclução de Curso":
         with c4:
             hora_defesa = st.text_input("Horário da Defesa da Banca:")
             notaTCC = st.text_input("Nota do TCC:")
-            st.markdown("<br><br>", unsafe_allow_html=True)
-            # st.write(" ex. 2024.2 para o certificado")
+            st.markdown("<div style='margin-bottom: 50px;'></div>", unsafe_allow_html=True)
+
+            
             formacao00 = st.selectbox("Titulação do Orientador:", opcoes_titulo)
             formacao01 = st.selectbox("Titulação do Professor 01:", opcoes_titulo)
             formacao02 = st.selectbox("Titulação do Professor 02:", opcoes_titulo)
