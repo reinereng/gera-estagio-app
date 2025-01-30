@@ -332,7 +332,7 @@ if tipo_documento == "Trabalho de Conclução de Curso":
         with c4:
             hora_defesa = st.text_input("Horário da Defesa da Banca:")
             notaTCC = st.text_input("Nota do TCC:")
-            st.markdown("<div style='margin-bottom: 70px;'></div>", unsafe_allow_html=True)
+            st.markdown("<div style='margin-bottom: 90px;'></div>", unsafe_allow_html=True)
 
             
             formacao00 = st.selectbox("Titulação do Orientador:", opcoes_titulo)
