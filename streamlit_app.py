@@ -130,15 +130,11 @@ opcao_entrada = st.radio(
 opcoes_Professor = [
     " ",
     "Outro",
-    "Acidalia Carine Vieira Santos",
     "Adriana Barros Dias",
     "Aline Alves Bandeira",
     "Alfredo Jorge Gomes Silva",
-    "Ana Caroline Melo dos Santos",
-    "Andre Mauricio Costa Ramos",
     "Anderson Ravanny de Andrade Gomes",
     "Andréa Luciane de Paula Lacerda",
-    "Anne Leticia de Oliveira Dourado",
     "Christiane Baracho Pereira da Silva",
     "Cícera Emanuelle Gomes de Oliveira",
     "Daniela Santos Ribeiro",
@@ -150,39 +146,25 @@ opcoes_Professor = [
     "Eudilena Laurindo de Medeiros",
     "Érika Souza Vieira",
     "Everton Moraes Lopes",
-    "Faustino Emilio Arenciba Jaime",
-    "Francianne Oliveira Santos",
-    "Graziele da Costa Cunha",
     "Ivy Góis da Fonsêca Lyra",
     "Jacyara Silva Oliveira",
     "Jandira Dantas dos Santos",
-    "Joaquim Pedro Soares Neto",
     "José Marques de Vasconcelos Filho",
     "Liliane Machado Nascimento Pereira",
     "Livia Maria Sales Lima Magalhães",
     "Lucas Kayzan Barbosa da Silva",
     "Luiz Sampaio Athayde Junior",
     "Luciana Labidel dos Santos",
-    "Manoel Messias da Silva Costa",
     "Marcel Engrácio Leal da Silva",
     "Michelle Diana Leal Pinheiro Matos",
     "Midiã Oliveira Lima",
-    "Natália Rafaela Souza de Lima",
-    "Nivia Nonato Silva",
     "Patrícia Mara Medeiros",
     "Paulo Fernando Araujo Feitosa Leite",
     "Paulo Rogério Menezes de Almeida",
     "Pedro Florencio Ribeiro",
-    "Rafael Tomaz de Oliveira",
     "Reiner Requião de Souza",
-    "Robert Andersson Firmiano Nicácio",
-    "Rodrigo Anselmo Cazzaniga",
-    "Sara de Almeida Borges Pithon",
-    "Sheila Coutinho Paiva Pitombo",
-    "Sueli José Pereira Correa",
     "Taiana Gomes Libório",
     "Tássia Rangel Guerreiro dos Santos"
-    "Victor Filgueiras Cruz Garcia"
 ]
 opcoes_titulo = [
     "Bach.",
@@ -646,10 +628,10 @@ if tipo_documento == "Estágio":
     
     if professor_escolhido == "Reiner Requião de Souza":
         professor = "Reiner Requião de Souza, portador do CPF n.º 009.893.855-07 e RG nº 07584711-65 SSP/BA"
-    if professor_escolhido == "Rejane da Costa":
-        professor = "Tássia Rangel Guerreiro dos Santos, portador do CPF n.º 031.770.105-36"
-    if professor_escolhido == "Francianne Oliveira Santos":
-        professor = "Francianne Oliveira Santos, portador do CPF n.º 016.969.575-16"
+    if professor_escolhido == "Adriana Barros Dias":
+        professor = "Adriana Barros Dias, portador do CPF n.º 682.516.455-49 e RG nº 04.945.966-00 SSP/BA"
+    if professor_escolhido == "Eudilena Laurindo de Medeiros":
+        professor = "Eudilena Laurindo de Medeiros, portador do CPF n.º 082.488.904-57 e RG nº 00.022.964-78 SSP/RN"
     if professor_escolhido == "Anderson Ravanny de Andrade Gomes":
         professor = "Anderson Ravanny de Andrade Gomes, portador do CPF n.º 074.662.624-06"
     if professor_escolhido == "Pedro Florencio Ribeiro":
