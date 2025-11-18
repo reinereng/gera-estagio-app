@@ -12,7 +12,9 @@ import requests
 from io import BytesIO
 
 # URL da imagem no GitHub
-image_url = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/imagens/logo_rede_unirb.jpg"
+# image_url = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/imagens/logo_rede_unirb.jpg"
+
+image_url = "https://raw.githubusercontent.com/reinereng/gera-estagio-app/main/imagens/unirb-rede-topo-site.jpg"
 
 # Carrega a imagem diretamente da URL
 response = requests.get(image_url)
